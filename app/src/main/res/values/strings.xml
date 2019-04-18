@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Music Management App</string>
+    <string name="nav_header_title">Music App</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+</resources>
