@@ -115,6 +115,7 @@ public class InfoAlbumFragment extends DialogFragment {
     }
 
     private void setArrayTracks() {
+        //TODO create a custom adapter
         String tracks = mAlbum.getTracks();
         String[] splitedList = tracks.split("@");
         ArrayList<Map<String,String>> itemDataList = new ArrayList<Map<String,String>>();
