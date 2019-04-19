@@ -226,7 +226,7 @@ public class HttpUtils {
         String url = null;
         for (int i = 0; i < imagesArray.length(); i++){
             JSONObject image = imagesArray.getJSONObject(i);
-            if (image.getString("size").equals("medium")) {
+            if (image.getString("size").equals("large")) {
                 url = image.getString("#text");
             }
         }

@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.util.Pair;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -68,12 +69,13 @@ public class TopAlbumFragment extends Fragment implements TopAlbumRecycleViewAda
     private void initView(View rootView) {
         mAlbumArrayList = new ArrayList<>();
         mTopAlbumRecyclerView = rootView.findViewById(R.id.topalbumlist_recycleview);
-        mTopAlbumRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mTeamRecycleViewAdapter = new TopAlbumRecycleViewAdapter(mAlbumArrayList, getActivity(), this);
+        mTopAlbumRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        mTeamRecycleViewAdapter = new TopAlbumRecycleViewAdapter(mAlbumArrayList, getActivity(), this, this);
         mTopAlbumRecyclerView.setAdapter(mTeamRecycleViewAdapter);
         SpaceItemDecoration decoration = new SpaceItemDecoration(16);
         mTopAlbumRecyclerView.addItemDecoration(decoration);
         mWaitProgressBar = rootView.findViewById(R.id.wait_progress_bar);
+        mWaitProgressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -111,6 +113,7 @@ public class TopAlbumFragment extends Fragment implements TopAlbumRecycleViewAda
             mTeamRecycleViewAdapter.addAll(data);
         }
         mAlbumArrayList = data;
+        mWaitProgressBar.setVisibility(View.GONE);
     }
 
     @Override

@@ -106,8 +106,6 @@ public class MainScreenActivity extends SingleFragmentActivity implements Naviga
         if (id == R.id.nav_search) {
             Intent intent = new Intent(this, SearchActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_toplist) {
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

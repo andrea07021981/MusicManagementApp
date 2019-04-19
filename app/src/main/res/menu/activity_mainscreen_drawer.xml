@@ -10,10 +10,6 @@
             android:id="@+id/nav_search"
             android:icon="@drawable/ic_search"
             android:title="Search" />
-        <item
-            android:id="@+id/nav_toplist"
-            android:icon="@drawable/ic_toplist"
-            android:title="Top List" />
     </group>
 
 </menu>

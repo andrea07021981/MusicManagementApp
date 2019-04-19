@@ -18,8 +18,8 @@ public interface AlbumDao {
     @Query("SELECT * FROM albums ORDER BY name")
     LiveData<List<AlbumEntity>> getAllalbums();
 
-    @Query("SELECT * FROM albums WHERE id = :id")
-    LiveData<AlbumEntity> getAlbumById(long id);
+    @Query("SELECT * FROM albums WHERE name = :name")
+    LiveData<AlbumEntity> getAlbumById(String name);
 
     @Insert
     public long insertAlbum(AlbumEntity albumEntity);

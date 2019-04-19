@@ -48,8 +48,8 @@ public class DataRepository {
         return mObservableAlbums;
     }
 
-    public LiveData<AlbumEntity> getAlbumById(final long albumId) {
-        return mDatabase.albumDao().getAlbumById(albumId);
+    public LiveData<AlbumEntity> getAlbumByName(final String albumName) {
+        return mDatabase.albumDao().getAlbumById(albumName);
     }
 
     public void insertAlbum(AlbumEntity albumEntity) {
@@ -61,6 +61,12 @@ public class DataRepository {
     public void updateAlbum(AlbumEntity albumEntity) {
         mExecutors.diskIO().execute(() -> {
             mDatabase.albumDao().updateAlbum(albumEntity);
+        });
+    }
+
+    public void deleteAlbum(AlbumEntity album) {
+        mExecutors.diskIO().execute(() -> {
+            mDatabase.albumDao().deleteAlbum(album);
         });
     }
 }
