@@ -23,8 +23,7 @@
             android:layout_height="80dp"
             android:src="@mipmap/ic_logo"
             android:contentDescription="@string/nav_header_desc"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:background="@drawable/circle" />
+            android:layout_marginRight="@dimen/activity_horizontal_margin"/>
 
         <TextView
             android:id="@+id/logoinfo_textview"

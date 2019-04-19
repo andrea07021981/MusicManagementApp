@@ -53,7 +53,7 @@ public class AlbumListViewModel extends AndroidViewModel {
         private final Application mApplication;
         private final DataRepository mRepository;
 
-        public Factory(@NonNull Application application, int userId, int teamId) {
+        public Factory(@NonNull Application application) {
             mApplication = application;
             mRepository = ((BasicApp) application).getLocalRepository();
         }

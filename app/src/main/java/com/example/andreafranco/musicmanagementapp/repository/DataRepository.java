@@ -23,9 +23,9 @@ public class DataRepository {
         mObservableAlbums = new MediatorLiveData<>();
 
         mObservableAlbums.addSource(mDatabase.albumDao().getAllalbums(),
-                userEntities -> {
+                albumEntities -> {
                     if (mDatabase.getDatabaseCreated().getValue() != null) {
-                        mObservableAlbums.postValue(userEntities);
+                        mObservableAlbums.postValue(albumEntities);
                     }
                 });
     }
@@ -42,7 +42,7 @@ public class DataRepository {
     }
 
     /**
-     * Get the list of users from the database and get notified when the data changes.
+     * Get the list of albums from the database and get notified when the data changes.
      */
     public LiveData<List<AlbumEntity>> getAlbums() {
         return mObservableAlbums;

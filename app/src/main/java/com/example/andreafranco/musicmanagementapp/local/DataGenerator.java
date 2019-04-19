@@ -2,8 +2,10 @@ package com.example.andreafranco.musicmanagementapp.local;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 
+import com.example.andreafranco.musicmanagementapp.R;
 import com.example.andreafranco.musicmanagementapp.local.entity.AlbumEntity;
 
 import java.io.ByteArrayOutputStream;
@@ -28,10 +30,8 @@ public class DataGenerator {
         List<AlbumEntity> users = new ArrayList<>();
         int id = 1;
         for (int i = 0; i < ALBUM.length; i++) {
-            Bitmap.Config conf = Bitmap.Config.ARGB_8888; // see other conf types
-            Bitmap bitmap = Bitmap.createBitmap(100, 100, conf); // this creates a MUTABLE bitmap
-            Canvas canvas = new Canvas(bitmap);
-            byte[] imageData = convertBitmapToByte(bitmap);
+            Bitmap image = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888);
+            byte[] imageData = convertBitmapToByte(image);
             AlbumEntity album = new AlbumEntity(
                     id,
                     ALBUM[i],
@@ -45,7 +45,11 @@ public class DataGenerator {
     }
 
     public static byte[] convertBitmapToByte(Bitmap bitmap) {
-        ByteArrayOutputStream output= new ByteArrayOutputStream(); bitmap.compress(Bitmap.CompressFormat.PNG, 0, output);
+        if (bitmap == null) {
+            bitmap = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888);
+        }
+        ByteArrayOutputStream output= new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 0, output);
         return output.toByteArray();
     }
 }

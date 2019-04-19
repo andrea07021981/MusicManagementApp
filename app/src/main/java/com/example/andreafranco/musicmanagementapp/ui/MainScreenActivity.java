@@ -1,9 +1,9 @@
 package com.example.andreafranco.musicmanagementapp.ui;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -16,8 +16,10 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.andreafranco.musicmanagementapp.R;
+import com.example.andreafranco.musicmanagementapp.local.entity.AlbumEntity;
+import com.example.andreafranco.musicmanagementapp.model.Album;
 
-public class MainScreenActivity extends SingleFragmentActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class MainScreenActivity extends SingleFragmentActivity implements NavigationView.OnNavigationItemSelectedListener, MainScreenFragment.MainScreenFragmentInteractionListener {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,7 +35,7 @@ public class MainScreenActivity extends SingleFragmentActivity implements Naviga
 
     @Override
     protected Fragment createFragment() {
-        return new Fragment();
+        return MainScreenFragment.newInstance();
     }
 
     @Override
@@ -102,7 +104,8 @@ public class MainScreenActivity extends SingleFragmentActivity implements Naviga
         int id = item.getItemId();
 
         if (id == R.id.nav_search) {
-
+            Intent intent = new Intent(this, SearchActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_toplist) {
 
         }
@@ -121,5 +124,9 @@ public class MainScreenActivity extends SingleFragmentActivity implements Naviga
                 .setNegativeButton("Cancel", ((dialog, which) -> dialog.dismiss()))
                 .setPositiveButton("Ok", (dialog, which) -> finish())
                 .show();;
+    }
+
+    @Override
+    public void onFragmentInteraction(AlbumEntity album) {
     }
 }

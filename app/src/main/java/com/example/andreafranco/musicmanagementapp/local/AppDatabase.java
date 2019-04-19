@@ -16,7 +16,6 @@ import com.example.andreafranco.musicmanagementapp.local.dao.AlbumDao;
 import com.example.andreafranco.musicmanagementapp.local.dao.ArtistDao;
 import com.example.andreafranco.musicmanagementapp.local.entity.AlbumEntity;
 import com.example.andreafranco.musicmanagementapp.local.entity.ArtistEntity;
-import com.example.andreafranco.musicmanagementapp.model.Album;
 
 import java.util.List;
 

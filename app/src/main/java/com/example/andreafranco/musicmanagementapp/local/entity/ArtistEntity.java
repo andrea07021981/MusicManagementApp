@@ -20,15 +20,22 @@ public class ArtistEntity implements Artist {
     @NonNull
     private String name;
 
+    @NonNull
+    @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
+    private byte[] image;
+
     @Ignore
-    public ArtistEntity(@NonNull String name) {
+    public ArtistEntity(@NonNull String name, @NonNull byte[] image) {
         this.name = name;
+        this.image = image;
     }
 
     public ArtistEntity(int id,
-                      @NonNull String name) {
+                        @NonNull String name,
+                        @NonNull byte[] image) {
         this.id = id;
         this.name = name;
+        this.image = image;
     }
 
     @Override
@@ -48,5 +55,15 @@ public class ArtistEntity implements Artist {
 
     public void setName(@NonNull String name) {
         this.name = name;
+    }
+
+    @Override
+    @NonNull
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(@NonNull byte[] image) {
+        this.image = image;
     }
 }

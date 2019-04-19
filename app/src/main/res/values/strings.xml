@@ -1,7 +1,19 @@
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Music Management App</string>
     <string name="nav_header_title">Music App</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="format_album">
+        <xliff:g id="Title ">%s</xliff:g>
+    </string>
+    <string name="format_artist">
+        <xliff:g id="Artist ">%s</xliff:g>
+    </string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="nothing_entered">Nothing entered</string>
+
+    <!-- LastFM api key -->
+    <string name="api_key">662a954a65209a1d7763b5c655077174</string>
+    <string name="secret">a3da5bd71db7b8f7315f77bdd02f0e0d</string>
 </resources>
