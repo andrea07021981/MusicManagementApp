@@ -24,4 +24,7 @@ public class BasicApp extends Application {
         return DataRepository.getInstance(getDatabase(), mAppExecutors);
     }
 
+    public AppExecutors getExecutor() {
+        return new AppExecutors();
+    }
 }

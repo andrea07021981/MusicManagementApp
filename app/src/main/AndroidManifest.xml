@@ -29,8 +29,8 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".ui.TopAlbumActivity"
-            android:theme="@style/AppTheme"
-            />
+            android:theme="@style/AppTheme" />
+        <activity android:name=".ui.InfoAlbumActivity"></activity>
     </application>
 
 </manifest>

@@ -51,11 +51,6 @@ public abstract class AppDatabase extends RoomDatabase {
                             if (BuildConfig.DEBUG) {
                                 // Generate the data for pre-population
                                 AppDatabase database = AppDatabase.getInstance(context, executors);
-
-                                //Add teams(it's a duty of server, but now we don't have ws connections already prepared)
-                                List<AlbumEntity> teams = DataGenerator.generateAlbums(context);
-                                inserTeamData(database, teams);
-
                                 // notify that the database was created and it's ready to be used
                                 database.setDatabaseCreated();
                             }
@@ -82,12 +77,6 @@ public abstract class AppDatabase extends RoomDatabase {
     public MutableLiveData<Boolean> getDatabaseCreated(){
         return mIsDatabaseCreated;
     };
-
-    private static void inserTeamData(AppDatabase database, List<AlbumEntity> albumEntities) {
-        database.runInTransaction(()-> {
-            database.albumDao().insertAllalbums(albumEntities);
-        });
-    }
 
     public abstract ArtistDao artistDao();
 

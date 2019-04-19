@@ -1,16 +1,19 @@
 package com.example.andreafranco.musicmanagementapp.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,9 +29,11 @@ import com.example.andreafranco.musicmanagementapp.ui.component.TopAlbumRecycleV
 import java.util.ArrayList;
 
 
-public class TopAlbumFragment extends Fragment implements TopAlbumRecycleViewAdapter.OnAlbumIterationListener, LoaderManager.LoaderCallbacks<ArrayList<AlbumEntity>> {
+public class TopAlbumFragment extends Fragment implements TopAlbumRecycleViewAdapter.OnTopAlbumIterationListener, LoaderManager.LoaderCallbacks<ArrayList<AlbumEntity>> {
 
     private static final String ARG_PARAM1 = "param1";
+    public static final String ALBUM_DETAIL = "album_detail";
+
     private OnTopAlbumFragmentInteractionListener mListener;
     private String mArtistName;
     private RecyclerView mTopAlbumRecyclerView;
@@ -97,7 +102,13 @@ public class TopAlbumFragment extends Fragment implements TopAlbumRecycleViewAda
 
     @Override
     public void onAlbumSelected(AlbumEntity album, Pair<View, String>... p) {
-
+        Intent intent = new Intent(getActivity(), InfoAlbumActivity.class);
+        Bundle args = new Bundle();
+        args.putParcelable(ALBUM_DETAIL, album);
+        intent.putExtras(args);
+        ActivityOptionsCompat options = ActivityOptionsCompat.
+                makeSceneTransitionAnimation(getActivity(), p[0]);
+        startActivity(intent, options.toBundle());
     }
 
     @NonNull

@@ -6,6 +6,6 @@ public interface Album {
     int getId();
     String getName();
     String getArtistname();
-    byte[] getImage();
+    String getImageurl();
     String getTracks();
 }

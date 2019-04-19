@@ -217,7 +217,7 @@ public class HttpUtils {
         artistList.add(new ArtistEntity(name, DataGenerator.convertBitmapToByte(image)));
     }
 
-    private static void getAlbum(ArrayList<AlbumEntity> artistList, JSONObject album) throws JSONException {
+    private static void getAlbum(ArrayList<AlbumEntity> albumList, JSONObject album) throws JSONException {
 
         String albumName = album.getString("name");
         String name = album.getJSONObject("artist").getString("name");
@@ -230,11 +230,9 @@ public class HttpUtils {
                 url = image.getString("#text");
             }
         }
-        Bitmap image = createBitmap(url);
-
         String tracks = searchTracks(name, albumName);
 
-        artistList.add(new AlbumEntity(albumName, name, DataGenerator.convertBitmapToByte(image), tracks));
+        albumList.add(new AlbumEntity(albumName, name, url, tracks));
     }
 
     private static String searchTracks(String name, String albumName) {
@@ -273,7 +271,11 @@ public class HttpUtils {
 
             for (int i = 0; i < track.length(); i++) {
                 JSONObject jsonObject = track.getJSONObject(i);
-                stringBuilder.append(jsonObject.getString("name")).append("-");
+                stringBuilder
+                        .append(jsonObject.getString("name"))
+                        .append("-")
+                        .append(jsonObject.getString("duration"))
+                        .append("@");
             }
         } catch (JSONException e) {
             Log.e(LOG_TAG, "Error parsing json ");

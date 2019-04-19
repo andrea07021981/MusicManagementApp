@@ -10,9 +10,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.andreafranco.musicmanagementapp.BasicApp;
 import com.example.andreafranco.musicmanagementapp.R;
 import com.example.andreafranco.musicmanagementapp.local.entity.AlbumEntity;
 import com.example.andreafranco.musicmanagementapp.model.Album;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,7 +71,14 @@ public class AlbumRecycleViewAdapter extends RecyclerView.Adapter<AlbumRecycleVi
 
         public void bindTeamVierwHolder(AlbumEntity album) {
             mAlbum = album;
-            mAlbumPictureImageVIew.setImageBitmap(BitmapFactory.decodeByteArray(mAlbum.getImage(), 0, mAlbum.getImage().length));
+            ((BasicApp) mContext.getApplicationContext()).getExecutor().mainThread().execute(new Runnable() {
+                @Override
+                public void run() {
+                    Picasso.with(mContext).
+                            load(album.getImageurl()).
+                            into(mAlbumPictureImageVIew);
+                }
+            });
             String albumFormat = mContext.getString(R.string.format_album);
             mAlbumNameTextView.setText(String.format(albumFormat, album.getName()));
             String artistFormat = mContext.getString(R.string.format_artist);
