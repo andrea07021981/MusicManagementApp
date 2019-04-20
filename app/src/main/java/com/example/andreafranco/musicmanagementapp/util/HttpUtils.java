@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 
 import com.example.andreafranco.musicmanagementapp.local.entity.AlbumEntity;
 import com.example.andreafranco.musicmanagementapp.local.entity.ArtistEntity;
+import com.example.andreafranco.musicmanagementapp.local.entity.TrackEntity;
 import com.example.andreafranco.musicmanagementapp.pojo.artist.Artist;
 import com.example.andreafranco.musicmanagementapp.pojo.artist.ArtistObject;
 import com.example.andreafranco.musicmanagementapp.pojo.artist.Artist_;
@@ -43,7 +44,7 @@ public class HttpUtils {
     public interface DataInterface {
         void responseArtistData(ArrayList<ArtistEntity> artists);
         void responseAlbumData(ArrayList<AlbumEntity> albums);
-        void responseTrackData(AlbumEntity album);
+        void responseTrackData(ArrayList<TrackEntity> tracks);
     }
 
     private HttpUtils() {
@@ -233,8 +234,8 @@ public class HttpUtils {
                 /*This is the success callback. Though the response type is JSON, with Retrofit we get the response in the form of ArtistEntity POJO class
                  */
                 if (response.body() != null) {
-                    AlbumEntity albumData = parseTracksData(response, albumEntity);
-                    mListener.responseTrackData(albumData);
+                    ArrayList<TrackEntity> tracksData = parseTracksData(response);
+                    mListener.responseTrackData(tracksData);
                 }
             }
             @Override
@@ -247,24 +248,19 @@ public class HttpUtils {
         });
     }
 
-    private static AlbumEntity parseTracksData(Response response, AlbumEntity albumEntity) {
+    private static ArrayList<TrackEntity> parseTracksData(Response response) {
+        ArrayList<TrackEntity> trackList = new ArrayList<>();
         TrackObject trackObject = (TrackObject) response.body();
         AlbumTrack album = trackObject.getAlbum();
         List<Track> tracksObject = album.getTracks().getTrack();
-        StringBuilder stringBuilder = new StringBuilder();
         for (Track track : tracksObject) {
-            setTracks(stringBuilder, track);
+            setTracks(trackList, track);
         }
-        albumEntity.setTracks(stringBuilder.toString());
-        return albumEntity;
+        return trackList;
     }
 
 
-    private static void setTracks(StringBuilder stringBuilder, Track track) {
-        stringBuilder
-                .append(track.getName())
-                .append("-")
-                .append(track.getDuration())
-                .append("@");
+    private static void setTracks(ArrayList<TrackEntity> trackList, Track track) {
+        trackList.add(new TrackEntity(track.getName(), track.getDuration()));
     }
 }

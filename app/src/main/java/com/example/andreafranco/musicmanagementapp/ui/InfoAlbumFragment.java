@@ -1,49 +1,43 @@
 package com.example.andreafranco.musicmanagementapp.ui;
 
-import android.app.Activity;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.example.andreafranco.musicmanagementapp.BasicApp;
 import com.example.andreafranco.musicmanagementapp.R;
 import com.example.andreafranco.musicmanagementapp.local.entity.AlbumEntity;
 import com.example.andreafranco.musicmanagementapp.local.entity.ArtistEntity;
-import com.example.andreafranco.musicmanagementapp.ui.component.ArtistRecycleViewAdapter;
+import com.example.andreafranco.musicmanagementapp.local.entity.TrackEntity;
+import com.example.andreafranco.musicmanagementapp.ui.component.TrackRecycleViewAdapter;
 import com.example.andreafranco.musicmanagementapp.util.HttpUtils;
-import com.example.andreafranco.musicmanagementapp.util.NetworkUtils;
 import com.example.andreafranco.musicmanagementapp.viewmodel.AlbumViewModel;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
-public class InfoAlbumFragment extends DialogFragment implements HttpUtils.DataInterface {
+public class InfoAlbumFragment extends DialogFragment implements HttpUtils.DataInterface, TrackRecycleViewAdapter.OnTrackIterationListener {
     private static final String ARG_PARAM1 = "param1";
     private static final String STORED = "stored";
 
     private AlbumEntity mAlbum;
     private TextView mAlbumNameTextView;
     private TextView mArtistNameTextView;
-    private ListView mTracksListView;
+    private RecyclerView mTracksRecycleView;
     private ImageButton mActionImageButton;
     private AlbumViewModel mAlbumViewModel;
+    private ArrayList<TrackEntity> mTrackArrayList;
+    private TrackRecycleViewAdapter mTeamRecycleViewAdapter;
 
     public InfoAlbumFragment() {
         // Required empty public constructor
@@ -79,9 +73,13 @@ public class InfoAlbumFragment extends DialogFragment implements HttpUtils.DataI
     }
 
     private void initView(final View rootView) {
+        mTrackArrayList = new ArrayList<>();
         mAlbumNameTextView = rootView.findViewById(R.id.album_name_textview);
         mArtistNameTextView = rootView.findViewById(R.id.artist_name_textview);
-        mTracksListView = rootView.findViewById(R.id.tracks_list_view);
+        mTracksRecycleView = rootView.findViewById(R.id.tracks_recycle_view);
+        mTracksRecycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mTeamRecycleViewAdapter = new TrackRecycleViewAdapter(mTrackArrayList, getActivity(), this);
+        mTracksRecycleView.setAdapter(mTeamRecycleViewAdapter);
         mActionImageButton = rootView.findViewById(R.id.action_image_button);
         mActionImageButton.setOnClickListener(this::updateLocalData);
         ImageView albumPictureImageVIew = rootView.findViewById(R.id.album_picture_imageview);
@@ -116,21 +114,6 @@ public class InfoAlbumFragment extends DialogFragment implements HttpUtils.DataI
         HttpUtils.getInstance().fetchTracks(this, mAlbum);
     }
 
-    private void setArrayTracks(String tracks) {
-        String[] splitedList = tracks.split("@");
-        ArrayList<Map<String,String>> itemDataList = new ArrayList<Map<String,String>>();
-        for (int i=0; i<splitedList.length; i++) {
-            Map<String,String> listItemMap = new HashMap<String,String>();
-            String[] splitedTrackDuration = splitedList[i].split("-");
-            listItemMap.put("title", splitedTrackDuration[0]);
-            listItemMap.put("description", splitedTrackDuration[1]);
-            itemDataList.add(listItemMap);
-        }
-        SimpleAdapter simpleAdapter = new SimpleAdapter(getActivity(),itemDataList,android.R.layout.simple_list_item_2,
-                new String[]{"title","description"},new int[]{android.R.id.text1,android.R.id.text2});
-        mTracksListView.setAdapter(simpleAdapter);
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -152,7 +135,16 @@ public class InfoAlbumFragment extends DialogFragment implements HttpUtils.DataI
     }
 
     @Override
-    public void responseTrackData(AlbumEntity album) {
-        setArrayTracks(album.getTracks());
+    public void responseTrackData(ArrayList<TrackEntity> tracks) {
+        if (tracks != null && tracks.size() != 0) {
+            mTeamRecycleViewAdapter.clear();
+            mTeamRecycleViewAdapter.addAll(tracks);
+        }
+        mTrackArrayList = tracks;
+    }
+
+    @Override
+    public void onTrackSelected() {
+
     }
 }

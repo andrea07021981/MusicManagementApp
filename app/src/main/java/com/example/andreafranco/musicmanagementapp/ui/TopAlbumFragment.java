@@ -17,6 +17,7 @@ import android.widget.ProgressBar;
 import com.example.andreafranco.musicmanagementapp.R;
 import com.example.andreafranco.musicmanagementapp.local.entity.AlbumEntity;
 import com.example.andreafranco.musicmanagementapp.local.entity.ArtistEntity;
+import com.example.andreafranco.musicmanagementapp.local.entity.TrackEntity;
 import com.example.andreafranco.musicmanagementapp.ui.component.SpaceItemDecoration;
 import com.example.andreafranco.musicmanagementapp.ui.component.TopAlbumRecycleViewAdapter;
 import com.example.andreafranco.musicmanagementapp.util.HttpUtils;
@@ -122,7 +123,7 @@ public class TopAlbumFragment extends Fragment implements TopAlbumRecycleViewAda
     }
 
     @Override
-    public void responseTrackData(AlbumEntity album) {
+    public void responseTrackData(ArrayList<TrackEntity> tracks) {
 
     }
 

@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.example.andreafranco.musicmanagementapp.R;
 import com.example.andreafranco.musicmanagementapp.local.entity.AlbumEntity;
 import com.example.andreafranco.musicmanagementapp.local.entity.ArtistEntity;
+import com.example.andreafranco.musicmanagementapp.local.entity.TrackEntity;
 import com.example.andreafranco.musicmanagementapp.ui.component.ArtistRecycleViewAdapter;
 import com.example.andreafranco.musicmanagementapp.util.HttpUtils;
 import com.example.andreafranco.musicmanagementapp.util.NetworkUtils;
@@ -110,7 +111,7 @@ public class SearchFragment extends Fragment implements
     }
 
     @Override
-    public void responseTrackData(AlbumEntity album) {
+    public void responseTrackData(ArrayList<TrackEntity> tracks) {
 
     }
 
@@ -134,6 +135,7 @@ public class SearchFragment extends Fragment implements
 
                 mSearchEditText.clearFocus();
                 if (!TextUtils.isEmpty(mSearchEditText.getText().toString().trim())) {
+                    mWaitProgressBar.setVisibility(View.VISIBLE);
                     HttpUtils.getInstance().fetchArtist(this, mSearchEditText.getText().toString());
                 } else {
                     showToast(rootView, getString(R.string.nothing_entered));

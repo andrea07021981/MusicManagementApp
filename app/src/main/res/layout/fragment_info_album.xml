@@ -67,8 +67,9 @@
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toBottomOf="@+id/album_name_textview" />
 
-        <ListView
-            android:id="@+id/tracks_list_view"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/tracks_recycle_view"
+            android:scrollbars="vertical"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"
@@ -93,7 +94,7 @@
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toBottomOf="@+id/tracks_list_view" />
+            card_view:layout_constraintTop_toBottomOf="@+id/tracks_recycle_view" />
 
 
     </android.support.constraint.ConstraintLayout>

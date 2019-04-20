@@ -5,10 +5,14 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="format_album">
-        <xliff:g id="Title ">%s</xliff:g>
+        <xliff:g id="Title">%s</xliff:g>
     </string>
     <string name="format_artist">
-        <xliff:g id="Artist ">%s</xliff:g>
+        <xliff:g id="Artist">%s</xliff:g>
+    </string>
+    <string name="format_time">
+        <xliff:g id="">%d</xliff:g>
+        :<xliff:g id="">%02d</xliff:g>
     </string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="nothing_entered">Nothing entered</string>

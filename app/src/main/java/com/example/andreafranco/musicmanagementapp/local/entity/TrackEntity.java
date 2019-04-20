@@ -46,7 +46,7 @@ public class TrackEntity implements TrackModel, Parcelable {
     }
 
     @Ignore
-    public TrackEntity(@NonNull String name, @NonNull String duration, @NonNull String imageurl, @NonNull String tracks) {
+    public TrackEntity(@NonNull String name, @NonNull String duration) {
         this.name = name;
         this.duration = duration;
     }
