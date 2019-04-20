@@ -2,7 +2,6 @@ package com.example.andreafranco.musicmanagementapp.ui;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
@@ -34,7 +33,7 @@ public class TopAlbumFragment extends Fragment implements TopAlbumRecycleViewAda
     private String mArtistName;
     private RecyclerView mTopAlbumRecyclerView;
     ProgressBar mWaitProgressBar = null;
-    private TopAlbumRecycleViewAdapter mTeamRecycleViewAdapter;
+    private TopAlbumRecycleViewAdapter mTopAlbumRecycleViewAdapter;
     private ArrayList<AlbumEntity> mAlbumArrayList;
 
     public TopAlbumFragment() {
@@ -71,8 +70,8 @@ public class TopAlbumFragment extends Fragment implements TopAlbumRecycleViewAda
         mAlbumArrayList = new ArrayList<>();
         mTopAlbumRecyclerView = rootView.findViewById(R.id.topalbumlist_recycleview);
         mTopAlbumRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-        mTeamRecycleViewAdapter = new TopAlbumRecycleViewAdapter(mAlbumArrayList, getActivity(), this, this);
-        mTopAlbumRecyclerView.setAdapter(mTeamRecycleViewAdapter);
+        mTopAlbumRecycleViewAdapter = new TopAlbumRecycleViewAdapter(mAlbumArrayList, getActivity(), this, this);
+        mTopAlbumRecyclerView.setAdapter(mTopAlbumRecycleViewAdapter);
         SpaceItemDecoration decoration = new SpaceItemDecoration(16);
         mTopAlbumRecyclerView.addItemDecoration(decoration);
         mWaitProgressBar = rootView.findViewById(R.id.wait_progress_bar);
@@ -115,8 +114,8 @@ public class TopAlbumFragment extends Fragment implements TopAlbumRecycleViewAda
     @Override
     public void responseAlbumData(ArrayList<AlbumEntity> albums) {
         if (albums != null && albums.size() != 0) {
-            mTeamRecycleViewAdapter.clear();
-            mTeamRecycleViewAdapter.addAll(albums);
+            mTopAlbumRecycleViewAdapter.clear();
+            mTopAlbumRecycleViewAdapter.addAll(albums);
         }
         mAlbumArrayList = albums;
         mWaitProgressBar.setVisibility(View.GONE);

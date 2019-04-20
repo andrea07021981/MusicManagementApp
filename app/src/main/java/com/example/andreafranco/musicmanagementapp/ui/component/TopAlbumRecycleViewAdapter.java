@@ -1,9 +1,6 @@
 package com.example.andreafranco.musicmanagementapp.ui.component;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
@@ -43,7 +40,7 @@ public class TopAlbumRecycleViewAdapter extends RecyclerView.Adapter<TopAlbumRec
     @Override
     public void onBindViewHolder(AlbumViewHolder holder, int position) {
         AlbumEntity album = mAlbumList.get(position);
-        holder.bindTeamVierwHolder(album);
+        holder.bindTopAlbumVierwHolder(album);
     }
 
     @Override
@@ -73,7 +70,7 @@ public class TopAlbumRecycleViewAdapter extends RecyclerView.Adapter<TopAlbumRec
             mAlbumPictureImageVIew = (ImageView) view.findViewById(R.id.album_picture_imageview);
         }
 
-        public void bindTeamVierwHolder(AlbumEntity album) {
+        public void bindTopAlbumVierwHolder(AlbumEntity album) {
             mAlbum = album;
             ((BasicApp) mContext.getApplicationContext()).getExecutor().mainThread().execute(new Runnable() {
                 @Override
@@ -110,6 +107,7 @@ public class TopAlbumRecycleViewAdapter extends RecyclerView.Adapter<TopAlbumRec
      * @param items The item array to be added.
      */
     public void addAll(List<AlbumEntity> items) {
+        mAlbumList.clear();
         if (mAlbumList == null) {
             mAlbumList = new ArrayList<>();
         }

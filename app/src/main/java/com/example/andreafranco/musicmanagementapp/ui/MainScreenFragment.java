@@ -59,8 +59,8 @@ public class MainScreenFragment extends Fragment implements AlbumRecycleViewAdap
     private void initView(View rootView) {
         mAlbumRecyclerView = rootView.findViewById(R.id.albumlist_recycleview);
         mAlbumRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        AlbumRecycleViewAdapter teamRecycleViewAdapter = new AlbumRecycleViewAdapter(new ArrayList<AlbumEntity>(), getActivity(), this);
-        mAlbumRecyclerView.setAdapter(teamRecycleViewAdapter);
+        AlbumRecycleViewAdapter trackRecycleViewAdapter = new AlbumRecycleViewAdapter(new ArrayList<AlbumEntity>(), getActivity(), this);
+        mAlbumRecyclerView.setAdapter(trackRecycleViewAdapter);
         SpaceItemDecoration decoration = new SpaceItemDecoration(16);
         mAlbumRecyclerView.addItemDecoration(decoration);
     }

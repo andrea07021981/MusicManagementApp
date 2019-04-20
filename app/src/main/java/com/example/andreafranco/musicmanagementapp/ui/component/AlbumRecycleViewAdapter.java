@@ -35,7 +35,7 @@ public class AlbumRecycleViewAdapter extends RecyclerView.Adapter<AlbumRecycleVi
     @Override
     public void onBindViewHolder(AlbumViewHolder holder, int position) {
         AlbumEntity album = mAlbumList.get(position);
-        holder.bindTeamVierwHolder(album);
+        holder.bindAlbumVierwHolder(album);
     }
 
     @Override
@@ -67,7 +67,7 @@ public class AlbumRecycleViewAdapter extends RecyclerView.Adapter<AlbumRecycleVi
             mArtistNameTextView = (TextView) view.findViewById(R.id.artist_name_textview);
         }
 
-        public void bindTeamVierwHolder(AlbumEntity album) {
+        public void bindAlbumVierwHolder(AlbumEntity album) {
             mAlbum = album;
             ((BasicApp) mContext.getApplicationContext()).getExecutor().mainThread().execute(new Runnable() {
                 @Override
@@ -107,6 +107,7 @@ public class AlbumRecycleViewAdapter extends RecyclerView.Adapter<AlbumRecycleVi
      * @param items The item array to be added.
      */
     public void addAll(List<AlbumEntity> items) {
+        mAlbumList.clear();
         if (mAlbumList == null) {
             mAlbumList = new ArrayList<>();
         }

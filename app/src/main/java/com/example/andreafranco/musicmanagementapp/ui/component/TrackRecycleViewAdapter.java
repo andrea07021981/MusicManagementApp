@@ -12,7 +12,6 @@ import com.example.andreafranco.musicmanagementapp.local.entity.TrackEntity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class TrackRecycleViewAdapter extends RecyclerView.Adapter<TrackRecycleViewAdapter.TrackViewHolder> {
     private List<TrackEntity> mTrackList;
@@ -32,7 +31,7 @@ public class TrackRecycleViewAdapter extends RecyclerView.Adapter<TrackRecycleVi
     @Override
     public void onBindViewHolder(TrackViewHolder holder, int position) {
         TrackEntity track = mTrackList.get(position);
-        holder.bindTeamVierwHolder(track);
+        holder.bindTrackVierwHolder(track);
     }
 
     @Override
@@ -64,7 +63,7 @@ public class TrackRecycleViewAdapter extends RecyclerView.Adapter<TrackRecycleVi
             mDurationTextView = (TextView) view.findViewById(R.id.duration_textview);
         }
 
-        public void bindTeamVierwHolder(TrackEntity track) {
+        public void bindTrackVierwHolder(TrackEntity track) {
             mTrack = track;
             mNumberTextView.setText(String.valueOf(getAdapterPosition()));
             mTitleTextView.setText(track.getName());

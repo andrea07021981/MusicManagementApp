@@ -2,7 +2,6 @@ package com.example.andreafranco.musicmanagementapp.ui;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -41,7 +40,7 @@ public class InfoAlbumFragment extends DialogFragment implements HttpUtils.DataI
     private AlbumViewModel mAlbumViewModel;
     private AlbumListViewModel mAlbumListViewModel;
     private ArrayList<TrackEntity> mTrackArrayList;
-    private TrackRecycleViewAdapter mTeamRecycleViewAdapter;
+    private TrackRecycleViewAdapter mTrackRecycleViewAdapter;
 
     public InfoAlbumFragment() {
         // Required empty public constructor
@@ -82,8 +81,8 @@ public class InfoAlbumFragment extends DialogFragment implements HttpUtils.DataI
         mArtistNameTextView = rootView.findViewById(R.id.artist_name_textview);
         mTracksRecycleView = rootView.findViewById(R.id.tracks_recycle_view);
         mTracksRecycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mTeamRecycleViewAdapter = new TrackRecycleViewAdapter(mTrackArrayList, getActivity(), this);
-        mTracksRecycleView.setAdapter(mTeamRecycleViewAdapter);
+        mTrackRecycleViewAdapter = new TrackRecycleViewAdapter(mTrackArrayList, getActivity(), this);
+        mTracksRecycleView.setAdapter(mTrackRecycleViewAdapter);
         mActionImageButton = rootView.findViewById(R.id.action_image_button);
         mActionImageButton.setOnClickListener(this::updateLocalData);
         ImageView albumPictureImageVIew = rootView.findViewById(R.id.album_picture_imageview);
@@ -152,8 +151,8 @@ public class InfoAlbumFragment extends DialogFragment implements HttpUtils.DataI
     @Override
     public void responseTrackData(ArrayList<TrackEntity> tracks) {
         if (tracks != null && tracks.size() != 0) {
-            mTeamRecycleViewAdapter.clear();
-            mTeamRecycleViewAdapter.addAll(tracks);
+            mTrackRecycleViewAdapter.clear();
+            mTrackRecycleViewAdapter.addAll(tracks);
         }
         mTrackArrayList = tracks;
     }
