@@ -1,9 +1,10 @@
-package com.example.andreafranco.musicmanagementapp.pojo;
+package com.example.andreafranco.musicmanagementapp.pojo.artist;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Image_ {
+public class Image {
+
     @SerializedName("#text")
     @Expose
     private String text;

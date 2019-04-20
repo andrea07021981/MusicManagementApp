@@ -1,6 +1,6 @@
 package com.example.andreafranco.musicmanagementapp.retrofit;
 
-import com.example.andreafranco.musicmanagementapp.pojo.ArtistObject;
+import com.example.andreafranco.musicmanagementapp.pojo.artist.ArtistObject;
 import com.example.andreafranco.musicmanagementapp.pojo.album.TopAlbumObject;
 import com.example.andreafranco.musicmanagementapp.pojo.track.TrackObject;
 

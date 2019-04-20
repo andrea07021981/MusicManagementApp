@@ -1,20 +1,15 @@
-package com.example.andreafranco.musicmanagementapp.pojo;
+package com.example.andreafranco.musicmanagementapp.pojo.artist;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
-public class Artist_ {
+public class Tag {
     @SerializedName("name")
     @Expose
     private String name;
     @SerializedName("url")
     @Expose
     private String url;
-    @SerializedName("image")
-    @Expose
-    private List<Image_> image = null;
 
     public String getName() {
         return name;
@@ -32,11 +27,4 @@ public class Artist_ {
         this.url = url;
     }
 
-    public List<Image_> getImage() {
-        return image;
-    }
-
-    public void setImage(List<Image_> image) {
-        this.image = image;
-    }
 }

@@ -1,7 +1,7 @@
 package com.example.andreafranco.musicmanagementapp.pojo.track;
 
-import com.example.andreafranco.musicmanagementapp.pojo.Image;
-import com.example.andreafranco.musicmanagementapp.pojo.Tags;
+import com.example.andreafranco.musicmanagementapp.pojo.artist.Image;
+import com.example.andreafranco.musicmanagementapp.pojo.artist.Tags;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

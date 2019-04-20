@@ -1,19 +1,15 @@
 package com.example.andreafranco.musicmanagementapp.util;
 
-import android.content.Context;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 
-import com.example.andreafranco.musicmanagementapp.AppExecutors;
-import com.example.andreafranco.musicmanagementapp.local.AppDatabase;
 import com.example.andreafranco.musicmanagementapp.local.entity.AlbumEntity;
 import com.example.andreafranco.musicmanagementapp.local.entity.ArtistEntity;
-import com.example.andreafranco.musicmanagementapp.pojo.Artist;
-import com.example.andreafranco.musicmanagementapp.pojo.ArtistObject;
-import com.example.andreafranco.musicmanagementapp.pojo.Artist_;
-import com.example.andreafranco.musicmanagementapp.pojo.Image;
-import com.example.andreafranco.musicmanagementapp.pojo.Image_;
-import com.example.andreafranco.musicmanagementapp.pojo.Similar;
+import com.example.andreafranco.musicmanagementapp.pojo.artist.Artist;
+import com.example.andreafranco.musicmanagementapp.pojo.artist.ArtistObject;
+import com.example.andreafranco.musicmanagementapp.pojo.artist.Artist_;
+import com.example.andreafranco.musicmanagementapp.pojo.artist.Image;
+import com.example.andreafranco.musicmanagementapp.pojo.artist.Image_;
+import com.example.andreafranco.musicmanagementapp.pojo.artist.Similar;
 import com.example.andreafranco.musicmanagementapp.pojo.album.Album;
 import com.example.andreafranco.musicmanagementapp.pojo.album.TopAlbumObject;
 import com.example.andreafranco.musicmanagementapp.pojo.album.Topalbums;
