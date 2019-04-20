@@ -24,8 +24,6 @@ import java.util.ArrayList;
 
 public class MainScreenFragment extends Fragment implements AlbumRecycleViewAdapter.OnAlbumIterationListener {
 
-    public static final String ALBUM_SELECTED = "album_selected";
-
     private MainScreenFragmentInteractionListener mListener;
     private AlbumListViewModel mAlbumViewModel;
     private RecyclerView mAlbumRecyclerView;
@@ -99,7 +97,7 @@ public class MainScreenFragment extends Fragment implements AlbumRecycleViewAdap
     public void onAlbumSelected(AlbumEntity album, Pair<View, String>... p) {
         Intent intent = new Intent(getActivity(), InfoAlbumActivity.class);
         Bundle args = new Bundle();
-        args.putParcelable(ALBUM_SELECTED, album);
+        args.putParcelable(TopAlbumFragment.ALBUM_DETAIL, album);
         intent.putExtras(args);
         ActivityOptionsCompat options = ActivityOptionsCompat.
                 makeSceneTransitionAnimation(getActivity(), p[0], p[1], p[2]);

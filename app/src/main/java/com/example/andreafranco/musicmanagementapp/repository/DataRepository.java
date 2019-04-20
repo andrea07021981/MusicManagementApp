@@ -80,7 +80,7 @@ public class DataRepository {
 
     public void deleteAlbum(AlbumEntity album) {
         mExecutors.diskIO().execute(() -> {
-            int id = mDatabase.albumDao().deleteAlbum(album.getId());
+            int id = mDatabase.albumDao().deleteAlbum(album);
             mDatabase.trackDao().deleteTracks(id);
         });
     }
