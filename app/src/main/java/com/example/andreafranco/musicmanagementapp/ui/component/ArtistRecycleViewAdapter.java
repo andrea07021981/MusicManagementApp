@@ -1,20 +1,25 @@
 package com.example.andreafranco.musicmanagementapp.ui.component;
 
+import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.andreafranco.musicmanagementapp.BasicApp;
 import com.example.andreafranco.musicmanagementapp.R;
 import com.example.andreafranco.musicmanagementapp.local.entity.ArtistEntity;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ArtistRecycleViewAdapter extends RecyclerView.Adapter<ArtistRecycleViewAdapter.ArtistListHolder>{
+    private final Context mContext;
     private List<ArtistEntity> mArtistList;
     OnArtistIterationListener mListener;
 
@@ -39,7 +44,17 @@ public class ArtistRecycleViewAdapter extends RecyclerView.Adapter<ArtistRecycle
 
         public void bindImage(ArtistEntity artist) {
             mArtist = artist;
-            mImageImageVIew.setImageBitmap(BitmapFactory.decodeByteArray(mArtist.getImage(), 0, mArtist.getImage().length));
+            ((BasicApp) mContext.getApplicationContext()).getExecutor().mainThread().execute(new Runnable() {
+                @Override
+                public void run() {
+                    if (artist.getImage() != null &&
+                            !TextUtils.isEmpty(artist.getImage())) {
+                        Picasso.with(mContext).
+                                load(artist.getImage()).
+                                into(mImageImageVIew);
+                    }
+                }
+            });
             mArtistName.setText(mArtist.getName());
         }
 
@@ -49,9 +64,10 @@ public class ArtistRecycleViewAdapter extends RecyclerView.Adapter<ArtistRecycle
         }
     }
 
-    public ArtistRecycleViewAdapter(List<ArtistEntity> artistList, OnArtistIterationListener listener) {
+    public ArtistRecycleViewAdapter(List<ArtistEntity> artistList, Context context, OnArtistIterationListener listener) {
         mArtistList = artistList;
         mListener = listener;
+        mContext = context;
     }
 
     @Override

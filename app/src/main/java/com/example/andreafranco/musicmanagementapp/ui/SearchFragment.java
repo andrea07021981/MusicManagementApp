@@ -138,7 +138,7 @@ public class SearchFragment extends Fragment implements LoaderManager.LoaderCall
 
     private void initValues(View view) {
         mArtistInfoArrayList = new ArrayList<>();
-        mArtistInfoAdapter = new ArtistRecycleViewAdapter(mArtistInfoArrayList, this);
+        mArtistInfoAdapter = new ArtistRecycleViewAdapter(mArtistInfoArrayList, getActivity(),this);
         mArtistRecyclerView.setAdapter(mArtistInfoAdapter);
     }
 

@@ -86,22 +86,6 @@ public class TopAlbumRecycleViewAdapter extends RecyclerView.Adapter<TopAlbumRec
                     }
                 }
             });
-
-            String albumFormat = mContext.getString(R.string.format_album);
-            /*mAlbumNameTextView.setText(String.format(albumFormat, album.getName()));
-            String artistFormat = mContext.getString(R.string.format_artist);
-            mArtistNameTextView.setText(String.format(artistFormat, album.getArtistname()));
-            AlbumViewModel.Factory factory = new AlbumViewModel.Factory(((Activity) mContext).getApplication(), album.getName());
-            mAlbumViewModel = ViewModelProviders.of(mParent, factory).get(AlbumViewModel.class);
-            mAlbumViewModel.getAlbum().observe(mParent, albumEntity -> {
-                if (albumEntity != null) {
-                    mActionImageButton.setImageDrawable(mContext.getDrawable(android.R.drawable.ic_delete));
-                    mActionImageButton.setTag(STORED);
-                } else {
-                    mActionImageButton.setImageDrawable(mContext.getDrawable(android.R.drawable.ic_menu_save));
-                    mActionImageButton.setTag(null);
-                }
-            });*/
         }
 
         @Override

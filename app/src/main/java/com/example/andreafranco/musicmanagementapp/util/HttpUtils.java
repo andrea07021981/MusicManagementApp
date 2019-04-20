@@ -214,7 +214,7 @@ public class HttpUtils {
             height = image.getHeight();
         }
         String name = artist.getString("name");
-        artistList.add(new ArtistEntity(name, DataGenerator.convertBitmapToByte(image)));
+        artistList.add(new ArtistEntity(name, url));
     }
 
     private static void getAlbum(ArrayList<AlbumEntity> albumList, JSONObject album) throws JSONException {
