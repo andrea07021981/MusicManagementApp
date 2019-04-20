@@ -62,7 +62,7 @@ public class TopAlbumFragment extends Fragment implements TopAlbumRecycleViewAda
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_top_album, container, false);
         initView(rootView);
-        HttpUtils.fetchTopAlbums(this, mArtistName);
+        HttpUtils.getInstance().fetchTopAlbums(this, mArtistName);
         return rootView;
     }
 
@@ -119,6 +119,11 @@ public class TopAlbumFragment extends Fragment implements TopAlbumRecycleViewAda
         }
         mAlbumArrayList = albums;
         mWaitProgressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void responseTrackData(AlbumEntity album) {
+
     }
 
     public interface OnTopAlbumFragmentInteractionListener {

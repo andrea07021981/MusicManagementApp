@@ -109,6 +109,11 @@ public class SearchFragment extends Fragment implements
 
     }
 
+    @Override
+    public void responseTrackData(AlbumEntity album) {
+
+    }
+
     public interface OnSearchFragmentInteractionListener {
         void onSearchFragmentInteraction(Uri uri);
     }
@@ -129,7 +134,7 @@ public class SearchFragment extends Fragment implements
 
                 mSearchEditText.clearFocus();
                 if (!TextUtils.isEmpty(mSearchEditText.getText().toString().trim())) {
-                    HttpUtils.fetchArtist(this, mSearchEditText.getText().toString());
+                    HttpUtils.getInstance().fetchArtist(this, mSearchEditText.getText().toString());
                 } else {
                     showToast(rootView, getString(R.string.nothing_entered));
                 }

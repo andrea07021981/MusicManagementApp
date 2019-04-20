@@ -22,7 +22,9 @@ import android.widget.TextView;
 import com.example.andreafranco.musicmanagementapp.BasicApp;
 import com.example.andreafranco.musicmanagementapp.R;
 import com.example.andreafranco.musicmanagementapp.local.entity.AlbumEntity;
+import com.example.andreafranco.musicmanagementapp.local.entity.ArtistEntity;
 import com.example.andreafranco.musicmanagementapp.ui.component.ArtistRecycleViewAdapter;
+import com.example.andreafranco.musicmanagementapp.util.HttpUtils;
 import com.example.andreafranco.musicmanagementapp.util.NetworkUtils;
 import com.example.andreafranco.musicmanagementapp.viewmodel.AlbumViewModel;
 import com.squareup.picasso.Picasso;
@@ -32,7 +34,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class InfoAlbumFragment extends DialogFragment {
+public class InfoAlbumFragment extends DialogFragment implements HttpUtils.DataInterface {
     private static final String ARG_PARAM1 = "param1";
     private static final String STORED = "stored";
 
@@ -95,13 +97,11 @@ public class InfoAlbumFragment extends DialogFragment {
 
     private void updateLocalData(View view) {
         //TODO da salvare/rimuovere
-
     }
 
     private void initValues(View view) {
         mAlbumNameTextView.setText(mAlbum.getName());
         mArtistNameTextView.setText(mAlbum.getArtistname());
-        setArrayTracks();
         AlbumViewModel.Factory factory = new AlbumViewModel.Factory(getActivity().getApplication(), mAlbum.getName());
         mAlbumViewModel = ViewModelProviders.of(this, factory).get(AlbumViewModel.class);
         mAlbumViewModel.getAlbum().observe(this, albumEntity -> {
@@ -113,11 +113,10 @@ public class InfoAlbumFragment extends DialogFragment {
                 mActionImageButton.setTag(null);
             }
         });
+        HttpUtils.getInstance().fetchTracks(this, mAlbum);
     }
 
-    private void setArrayTracks() {
-        //TODO create a custom adapter
-        String tracks = mAlbum.getTracks();
+    private void setArrayTracks(String tracks) {
         String[] splitedList = tracks.split("@");
         ArrayList<Map<String,String>> itemDataList = new ArrayList<Map<String,String>>();
         for (int i=0; i<splitedList.length; i++) {
@@ -140,5 +139,20 @@ public class InfoAlbumFragment extends DialogFragment {
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+    @Override
+    public void responseArtistData(ArrayList<ArtistEntity> artists) {
+
+    }
+
+    @Override
+    public void responseAlbumData(ArrayList<AlbumEntity> albums) {
+
+    }
+
+    @Override
+    public void responseTrackData(AlbumEntity album) {
+        setArrayTracks(album.getTracks());
     }
 }
