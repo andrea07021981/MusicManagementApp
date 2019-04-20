@@ -14,12 +14,14 @@ import com.example.andreafranco.musicmanagementapp.AppExecutors;
 import com.example.andreafranco.musicmanagementapp.BuildConfig;
 import com.example.andreafranco.musicmanagementapp.local.dao.AlbumDao;
 import com.example.andreafranco.musicmanagementapp.local.dao.ArtistDao;
+import com.example.andreafranco.musicmanagementapp.local.dao.TrackDao;
 import com.example.andreafranco.musicmanagementapp.local.entity.AlbumEntity;
 import com.example.andreafranco.musicmanagementapp.local.entity.ArtistEntity;
+import com.example.andreafranco.musicmanagementapp.local.entity.TrackEntity;
 
 import java.util.List;
 
-@Database(entities = {ArtistEntity.class, AlbumEntity.class}, version = 1, exportSchema = false)
+@Database(entities = {ArtistEntity.class, AlbumEntity.class, TrackEntity.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static final String LOG_TAG = AppDatabase.class.getSimpleName();
@@ -81,4 +83,6 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract ArtistDao artistDao();
 
     public abstract AlbumDao albumDao();
+
+    public abstract TrackDao trackDao();
 }

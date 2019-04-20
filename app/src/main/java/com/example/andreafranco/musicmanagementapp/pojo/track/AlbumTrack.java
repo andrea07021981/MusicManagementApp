@@ -31,7 +31,7 @@ public class AlbumTrack {
     private String playcount;
     @SerializedName("tracks")
     @Expose
-    private Tracks tracks;
+    private Tracks_ tracks;
     @SerializedName("tags")
     @Expose
     private Tags tags;
@@ -95,11 +95,11 @@ public class AlbumTrack {
         this.playcount = playcount;
     }
 
-    public Tracks getTracks() {
+    public Tracks_ getTracks() {
         return tracks;
     }
 
-    public void setTracks(Tracks tracks) {
+    public void setTracks(Tracks_ tracks) {
         this.tracks = tracks;
     }
 

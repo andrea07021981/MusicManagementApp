@@ -4,4 +4,5 @@ public interface TrackModel {
     int getId();
     String getName();
     String getDuration();
+    int getAlbumid();
 }

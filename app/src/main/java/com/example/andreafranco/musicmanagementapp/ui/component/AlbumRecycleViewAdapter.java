@@ -63,7 +63,7 @@ public class AlbumRecycleViewAdapter extends RecyclerView.Adapter<AlbumRecycleVi
             super(view);
             view.setOnClickListener(this);
             mAlbumPictureImageVIew = (ImageView) view.findViewById(R.id.album_picture_imageview);
-            mAlbumNameTextView = (TextView) view.findViewById(R.id.artist_name_textview);
+            mAlbumNameTextView = (TextView) view.findViewById(R.id.album_name_textview);
             mArtistNameTextView = (TextView) view.findViewById(R.id.artist_name_textview);
         }
 
@@ -85,9 +85,9 @@ public class AlbumRecycleViewAdapter extends RecyclerView.Adapter<AlbumRecycleVi
 
         @Override
         public void onClick(View v) {
-            Pair<View, String> p1 = Pair.create(mAlbumPictureImageVIew, "albumpicture");
-            Pair<View, String> p2 = Pair.create(mAlbumNameTextView, "albumname");
-            Pair<View, String> p3 = Pair.create(mArtistNameTextView, "artistname");
+            Pair<View, String> p1 = Pair.create(mAlbumPictureImageVIew, "albumpicturedetail");
+            Pair<View, String> p2 = Pair.create(mAlbumNameTextView, "albumnamedetail");
+            Pair<View, String> p3 = Pair.create(mArtistNameTextView, "artistamedetail");
             mListener.onAlbumSelected(mAlbum, p1, p2, p3);
         }
     }

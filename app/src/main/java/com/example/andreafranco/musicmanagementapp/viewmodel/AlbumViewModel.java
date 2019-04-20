@@ -9,8 +9,10 @@ import android.support.annotation.NonNull;
 
 import com.example.andreafranco.musicmanagementapp.BasicApp;
 import com.example.andreafranco.musicmanagementapp.local.entity.AlbumEntity;
+import com.example.andreafranco.musicmanagementapp.local.entity.TrackEntity;
 import com.example.andreafranco.musicmanagementapp.repository.DataRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AlbumViewModel extends AndroidViewModel {
@@ -33,11 +35,11 @@ public class AlbumViewModel extends AndroidViewModel {
     }
 
     public void deleteAlbum(AlbumEntity album) {
-        mRepository.getAlbums();
+        mRepository.deleteAlbum(album);
     }
 
-    public void insertAlbum(AlbumEntity album) {
-        mRepository.insertAlbum(album);
+    public void insertAlbum(AlbumEntity album, ArrayList<TrackEntity> mTrackArrayList) {
+        mRepository.insertAlbum(album, mTrackArrayList);
     }
 
     /**

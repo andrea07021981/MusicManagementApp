@@ -128,6 +128,6 @@ public class TopAlbumFragment extends Fragment implements TopAlbumRecycleViewAda
     }
 
     public interface OnTopAlbumFragmentInteractionListener {
-        void onTopAlbumFragmentInteraction(Uri uri);
+        void onTopAlbumFragmentInteraction();
     }
 }

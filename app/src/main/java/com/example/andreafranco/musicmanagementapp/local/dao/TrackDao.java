@@ -22,6 +22,9 @@ public interface TrackDao {
     @Query("SELECT * FROM tracks WHERE id = :id")
     LiveData<TrackEntity> getTrackById(long id);
 
+    @Query("SELECT * FROM tracks WHERE albumid = :albumid")
+    LiveData<List<TrackEntity>> getTrackByAlbum(int albumid);
+
     @Insert
     public long insertTrack(TrackEntity trackEntity);
 
@@ -29,8 +32,8 @@ public interface TrackDao {
     public long[] insertAllTracks(List<TrackEntity> trackList);
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    void updateArtist(TrackEntity trackEntity);
+    void updateTrack(TrackEntity trackEntity);
 
-    @Delete
-    public int deleteArtist(TrackEntity artistEntity);
+    @Query("DELETE FROM tracks WHERE albumid = :albumId")
+    public int deleteTracks(int albumId);
 }

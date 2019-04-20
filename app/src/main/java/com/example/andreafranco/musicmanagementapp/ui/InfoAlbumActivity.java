@@ -1,5 +1,6 @@
 package com.example.andreafranco.musicmanagementapp.ui;
 
+import android.net.Uri;
 import android.os.Parcelable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -12,7 +13,7 @@ import com.example.andreafranco.musicmanagementapp.ui.SingleFragmentActivity;
 
 import static com.example.andreafranco.musicmanagementapp.ui.TopAlbumFragment.ALBUM_DETAIL;
 
-public class InfoAlbumActivity extends SingleFragmentActivity {
+public class InfoAlbumActivity extends SingleFragmentActivity implements InfoAlbumFragment.OnInfoAlbumFragmentInteractionListener {
 
     private AlbumEntity mAlbumSelected;
 
@@ -39,5 +40,10 @@ public class InfoAlbumActivity extends SingleFragmentActivity {
     @Override
     protected void setupToolbar(boolean visible) {
 
+    }
+
+    @Override
+    public void onInfoAlbumFragmentInteraction() {
+        finish();
     }
 }

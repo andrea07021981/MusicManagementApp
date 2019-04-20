@@ -49,7 +49,7 @@ public class TopAlbumActivity extends SingleFragmentActivity implements TopAlbum
     }
 
     @Override
-    public void onTopAlbumFragmentInteraction(Uri uri) {
+    public void onTopAlbumFragmentInteraction() {
 
     }
 }

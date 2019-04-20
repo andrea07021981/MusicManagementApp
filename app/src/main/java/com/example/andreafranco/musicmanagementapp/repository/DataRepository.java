@@ -7,7 +7,9 @@ import android.support.annotation.NonNull;
 import com.example.andreafranco.musicmanagementapp.AppExecutors;
 import com.example.andreafranco.musicmanagementapp.local.AppDatabase;
 import com.example.andreafranco.musicmanagementapp.local.entity.AlbumEntity;
+import com.example.andreafranco.musicmanagementapp.local.entity.TrackEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DataRepository {
@@ -52,9 +54,21 @@ public class DataRepository {
         return mDatabase.albumDao().getAlbumById(albumName);
     }
 
-    public void insertAlbum(AlbumEntity albumEntity) {
+    //here I add the tracks on db
+    //TODO the next step would be creating a relation between table and do the inserts simultaneously with a @Transaction method
+    public void insertAlbum(AlbumEntity albumEntity, ArrayList<TrackEntity> mTrackArrayList) {
         mExecutors.diskIO().execute(()-> {
-            mDatabase.albumDao().insertAlbum(albumEntity);
+            long id = mDatabase.albumDao().insertAlbum(albumEntity);
+            for (TrackEntity track : mTrackArrayList) {
+                track.setAlbumid(Math.toIntExact(id));
+            }
+            mDatabase.trackDao().insertAllTracks(mTrackArrayList);
+        });
+    }
+
+    public void insertTracks(List<TrackEntity> tracks) {
+        mExecutors.diskIO().execute(()-> {
+            mDatabase.trackDao().insertAllTracks(tracks);
         });
     }
 
@@ -66,7 +80,8 @@ public class DataRepository {
 
     public void deleteAlbum(AlbumEntity album) {
         mExecutors.diskIO().execute(() -> {
-            mDatabase.albumDao().deleteAlbum(album);
+            int id = mDatabase.albumDao().deleteAlbum(album.getId());
+            mDatabase.trackDao().deleteTracks(id);
         });
     }
 }

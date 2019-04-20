@@ -1,6 +1,7 @@
 package com.example.andreafranco.musicmanagementapp.local.entity;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
@@ -11,15 +12,6 @@ import android.support.annotation.NonNull;
 import com.example.andreafranco.musicmanagementapp.model.TrackModel;
 
 @Entity(tableName = "tracks", indices = {@Index("id")})
-
-/*rimuovere byte da artist come album;
-aggiungere join tra album e track
-creare nuovo modello AlbumInfo con la query in join
-usare insert per album e tracks con @transaction
-create custom adapter per tracks come immagine
-
-sostituire i loader con retrofit (se tempo)*/
-
 public class TrackEntity implements TrackModel, Parcelable {
 
     @PrimaryKey(autoGenerate = true)
@@ -30,6 +22,9 @@ public class TrackEntity implements TrackModel, Parcelable {
 
     @NonNull
     private String duration;
+
+    @NonNull
+    private int albumid;
 
     public static final Creator CREATOR = new Creator() {
         public TrackEntity createFromParcel(Parcel in) {
@@ -53,10 +48,12 @@ public class TrackEntity implements TrackModel, Parcelable {
 
     public TrackEntity(int id,
                        @NonNull String name,
-                       @NonNull String duration) {
+                       @NonNull String duration,
+                       @NonNull int albumid) {
         this.id = id;
         this.name = name;
         this.duration = duration;
+        this.albumid = albumid;
     }
 
     @Override
@@ -80,6 +77,16 @@ public class TrackEntity implements TrackModel, Parcelable {
 
     @Override
     @NonNull
+    public int getAlbumid() {
+        return albumid;
+    }
+
+    public void setAlbumid(@NonNull int albumid) {
+        this.albumid = albumid;
+    }
+
+    @Override
+    @NonNull
     public String getDuration() {
         return duration;
     }
@@ -93,6 +100,7 @@ public class TrackEntity implements TrackModel, Parcelable {
         this.id = in.readInt();
         this.name = in.readString();
         this.duration = in.readString();
+        this.albumid = in.readInt();
     }
 
     @Override
@@ -105,5 +113,6 @@ public class TrackEntity implements TrackModel, Parcelable {
         dest.writeInt(this.id);
         dest.writeString(this.name);
         dest.writeString(this.duration);
+        dest.writeInt(this.albumid);
     }
 }

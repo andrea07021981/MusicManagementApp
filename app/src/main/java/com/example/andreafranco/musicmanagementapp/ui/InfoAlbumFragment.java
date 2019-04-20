@@ -2,6 +2,7 @@ package com.example.andreafranco.musicmanagementapp.ui;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,6 +22,7 @@ import com.example.andreafranco.musicmanagementapp.local.entity.ArtistEntity;
 import com.example.andreafranco.musicmanagementapp.local.entity.TrackEntity;
 import com.example.andreafranco.musicmanagementapp.ui.component.TrackRecycleViewAdapter;
 import com.example.andreafranco.musicmanagementapp.util.HttpUtils;
+import com.example.andreafranco.musicmanagementapp.viewmodel.AlbumListViewModel;
 import com.example.andreafranco.musicmanagementapp.viewmodel.AlbumViewModel;
 import com.squareup.picasso.Picasso;
 
@@ -30,12 +32,14 @@ public class InfoAlbumFragment extends DialogFragment implements HttpUtils.DataI
     private static final String ARG_PARAM1 = "param1";
     private static final String STORED = "stored";
 
+    private OnInfoAlbumFragmentInteractionListener mListener;
     private AlbumEntity mAlbum;
     private TextView mAlbumNameTextView;
     private TextView mArtistNameTextView;
     private RecyclerView mTracksRecycleView;
     private ImageButton mActionImageButton;
     private AlbumViewModel mAlbumViewModel;
+    private AlbumListViewModel mAlbumListViewModel;
     private ArrayList<TrackEntity> mTrackArrayList;
     private TrackRecycleViewAdapter mTeamRecycleViewAdapter;
 
@@ -94,7 +98,12 @@ public class InfoAlbumFragment extends DialogFragment implements HttpUtils.DataI
     }
 
     private void updateLocalData(View view) {
-        //TODO da salvare/rimuovere
+        if (view.getTag() != null) {
+            mAlbumViewModel.deleteAlbum(mAlbum);
+        } else {
+            mAlbumViewModel.insertAlbum(mAlbum, mTrackArrayList);
+        }
+        mListener.onInfoAlbumFragmentInteraction();
     }
 
     private void initValues(View view) {
@@ -117,6 +126,12 @@ public class InfoAlbumFragment extends DialogFragment implements HttpUtils.DataI
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        if (context instanceof OnInfoAlbumFragmentInteractionListener) {
+            mListener = (OnInfoAlbumFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnInfoAlbumFragmentInteractionListener");
+        }
     }
 
     @Override
@@ -146,5 +161,9 @@ public class InfoAlbumFragment extends DialogFragment implements HttpUtils.DataI
     @Override
     public void onTrackSelected() {
 
+    }
+
+    public interface OnInfoAlbumFragmentInteractionListener {
+        void onInfoAlbumFragmentInteraction();
     }
 }
