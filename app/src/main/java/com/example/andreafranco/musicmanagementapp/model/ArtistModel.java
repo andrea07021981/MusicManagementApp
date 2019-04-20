@@ -1,6 +1,6 @@
 package com.example.andreafranco.musicmanagementapp.model;
 
-public interface Artist {
+public interface ArtistModel {
     int getId();
     String getName();
     String getImage();

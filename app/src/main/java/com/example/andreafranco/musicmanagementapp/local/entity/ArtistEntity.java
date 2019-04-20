@@ -1,26 +1,27 @@
 package com.example.andreafranco.musicmanagementapp.local.entity;
 
-import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
 
-import com.example.andreafranco.musicmanagementapp.model.Artist;
+import com.example.andreafranco.musicmanagementapp.model.ArtistModel;
+import com.google.gson.annotations.SerializedName;
 
 @Entity(tableName = "artists", indices = {@Index("id")})
-public class ArtistEntity implements Artist {
+public class ArtistEntity implements ArtistModel {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
 
     @NonNull
+    @SerializedName("name")
     private String name;
 
     @NonNull
+    @SerializedName("image")
     private String image;
 
     @Ignore

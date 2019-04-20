@@ -2,7 +2,7 @@ package com.example.andreafranco.musicmanagementapp.model;
 
 import java.util.Date;
 
-public interface Album {
+public interface AlbumModel {
     int getId();
     String getName();
     String getArtistname();

@@ -17,7 +17,6 @@ import android.view.View;
 
 import com.example.andreafranco.musicmanagementapp.R;
 import com.example.andreafranco.musicmanagementapp.local.entity.AlbumEntity;
-import com.example.andreafranco.musicmanagementapp.model.Album;
 
 public class MainScreenActivity extends SingleFragmentActivity implements NavigationView.OnNavigationItemSelectedListener, MainScreenFragment.MainScreenFragmentInteractionListener {
 

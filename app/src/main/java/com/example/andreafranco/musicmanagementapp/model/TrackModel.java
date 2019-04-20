@@ -1,6 +1,6 @@
 package com.example.andreafranco.musicmanagementapp.model;
 
-public interface Track {
+public interface TrackModel {
     int getId();
     String getName();
     String getDuration();

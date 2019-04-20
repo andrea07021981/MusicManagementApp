@@ -8,8 +8,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
-import com.example.andreafranco.musicmanagementapp.model.Album;
-import com.example.andreafranco.musicmanagementapp.model.Track;
+import com.example.andreafranco.musicmanagementapp.model.TrackModel;
 
 @Entity(tableName = "tracks", indices = {@Index("id")})
 
@@ -21,7 +20,7 @@ create custom adapter per tracks come immagine
 
 sostituire i loader con retrofit (se tempo)*/
 
-public class TrackEntity implements Track, Parcelable {
+public class TrackEntity implements TrackModel, Parcelable {
 
     @PrimaryKey(autoGenerate = true)
     private int id;

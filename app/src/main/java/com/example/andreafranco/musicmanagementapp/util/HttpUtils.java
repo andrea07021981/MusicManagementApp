@@ -6,12 +6,28 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.example.andreafranco.musicmanagementapp.local.DataGenerator;
+import com.example.andreafranco.musicmanagementapp.pojo.Artist;
+import com.example.andreafranco.musicmanagementapp.pojo.ArtistObject;
+import com.example.andreafranco.musicmanagementapp.pojo.Artist_;
+import com.example.andreafranco.musicmanagementapp.pojo.Image;
+import com.example.andreafranco.musicmanagementapp.pojo.Image_;
+import com.example.andreafranco.musicmanagementapp.pojo.Similar;
+import com.example.andreafranco.musicmanagementapp.pojo.album.Album;
+import com.example.andreafranco.musicmanagementapp.pojo.album.TopAlbumObject;
+import com.example.andreafranco.musicmanagementapp.pojo.album.Topalbums;
+import com.example.andreafranco.musicmanagementapp.pojo.track.AlbumTrack;
+import com.example.andreafranco.musicmanagementapp.pojo.track.Track;
+import com.example.andreafranco.musicmanagementapp.pojo.track.TrackObject;
+import com.example.andreafranco.musicmanagementapp.pojo.track.Tracks;
+import com.example.andreafranco.musicmanagementapp.retrofit.RetrofitClient;
 import com.example.andreafranco.musicmanagementapp.local.entity.AlbumEntity;
 import com.example.andreafranco.musicmanagementapp.local.entity.ArtistEntity;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,19 +41,249 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
+
+import okhttp3.Request;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HttpUtils {
 
     private static final String LOG_TAG = HttpUtils.class.getSimpleName();
     private static Context mContext;
 
+    public static final String BASE_URL = "http://ws.audioscrobbler.com";
+    public static Retrofit retrofit;
+
+    public static DataInterface mListener;
+    public interface DataInterface {
+        void responseArtistData(ArrayList<ArtistEntity> artists);
+        void responseAlbumData(ArrayList<AlbumEntity> albums);
+    }
+    /*
+        This public static method will return Retrofit client
+        anywhere in the appplication
+        */
+    public static Retrofit getRetrofitClient() {
+        //If condition to ensure we don't create multiple retrofit instances in a single application
+        if (retrofit == null) {
+            Gson gson = new GsonBuilder()
+                    .setLenient()
+                    .excludeFieldsWithoutExposeAnnotation()
+                    .create();
+            //Defining the Retrofit using Builder
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL) //This is the only mandatory call on Builder object.
+                    .addConverterFactory(GsonConverterFactory.create(gson)) // Convertor library used to convert response into POJO
+                    .build();
+        }
+        return retrofit;
+    }
+
+
+    public static void fetchArtist(Fragment fragment, String artistName) {
+        mListener = (DataInterface) fragment;
+        Retrofit retrofit = HttpUtils.getRetrofitClient();
+        RetrofitClient retrofitClient = retrofit.create(RetrofitClient.class);
+
+        Call<ArtistObject> call = retrofitClient.getArtistByName(
+                "artist.getinfo",
+                artistName,
+                "662a954a65209a1d7763b5c655077174",
+                "json");
+
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                /*This is the success callback. Though the response type is JSON, with Retrofit we get the response in the form of ArtistEntity POJO class
+                 */
+                if (response.body() != null) {
+                    ArrayList<ArtistEntity> artistData = parseArtistData(response);
+                    mListener.responseArtistData(artistData);
+                }
+            }
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                /*
+                Error callback
+                */
+                Request request = call.request();
+            }
+        });
+    }
+
+    private static ArrayList<ArtistEntity> parseArtistData(Response response){
+        Object body = response.body();
+        ArrayList<ArtistEntity> artistList = new ArrayList<>();
+        Artist mainArtist = ((ArtistObject) body).getArtist();
+        setArtistInfo(mainArtist, artistList);
+
+        //Loading of similar artists
+        Similar similar = ((ArtistObject) body).getArtist().getSimilar();
+        similar.getArtist();
+        for (Artist_ artist : similar.getArtist()) {
+            setArtistInfo(artist, artistList);
+        }
+        return artistList;
+    }
+
+    private static void setArtistInfo(Object body, ArrayList<ArtistEntity> artistList) {
+        String name = "";
+        String url = "";
+        if (body instanceof Artist) {
+            Artist artist = (Artist) body;
+            name = artist.getName();
+            List<Image> imageList = artist.getImage();
+            for (Image image : imageList) {
+                if (image.getSize().equals("medium")) {
+                    url = image.getText();
+                    break;
+                }
+            }
+        } else if (body instanceof Artist_) {
+            Artist_ artist = (Artist_) body;
+            name = artist.getName();
+            List<Image_> imageList = artist.getImage();
+            for (Image_ image : imageList) {
+                if (image.getSize().equals("medium")) {
+                    url = image.getText();
+                    break;
+                }
+            }
+        }
+        artistList.add(new ArtistEntity(name, url));
+    }
+
+
     /**
+     * Search top albums
+     */
+    public static void fetchTopAlbums(Fragment fragment, String artistName) {
+        mListener = (DataInterface) fragment;
+        Retrofit retrofit = HttpUtils.getRetrofitClient();
+        RetrofitClient retrofitClient = retrofit.create(RetrofitClient.class);
+
+        Call<TopAlbumObject> call = retrofitClient.getTopAlbums(
+                "artist.gettopalbums",
+                artistName,
+                "662a954a65209a1d7763b5c655077174",
+                "json");
+
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                /*This is the success callback. Though the response type is JSON, with Retrofit we get the response in the form of ArtistEntity POJO class
+                 */
+                if (response.body() != null) {
+                    ArrayList<AlbumEntity> artistData = parseAlbumData(response);
+                    mListener.responseAlbumData(artistData);
+                }
+            }
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                /*
+                Error callback
+                */
+                Request request = call.request();
+            }
+        });
+    }
+
+    private static ArrayList<AlbumEntity> parseAlbumData(Response response){
+        Object body = response.body();
+        ArrayList<AlbumEntity> artistList = new ArrayList<>();
+        Topalbums topalbums = ((TopAlbumObject) body).getTopalbums();
+        setAlbumInfo(topalbums, artistList);
+        return artistList;
+    }
+
+    private static void setAlbumInfo(Object body, ArrayList<AlbumEntity> albumList) {
+        String url = "";
+        String albumName = "";
+        String name = "";
+        String tracks = "";
+
+        Topalbums topalbums = (Topalbums) body;
+        List<Album> albumsList = topalbums.getAlbum();
+        for (Album album : albumsList) {
+            albumName = album.getName();
+            name = album.getArtist().getName();
+
+            List<Image> imageList = album.getImage();
+            for (Image image : imageList) {
+                if (image.getSize().equals("large")) {
+                    url = image.getText();
+                    break;
+                }
+            }
+
+            albumList.add(new AlbumEntity(albumName, name, url, tracks));
+        }
+    }
+
+    public static void fetchTracks(String albumName, String name, String url, String tracks) {
+        Retrofit retrofit = HttpUtils.getRetrofitClient();
+        RetrofitClient retrofitClient = retrofit.create(RetrofitClient.class);
+
+        Call<TrackObject> call = retrofitClient.getTracks(
+                "album.getinfo",
+                name,
+                albumName,
+                "662a954a65209a1d7763b5c655077174",
+                "json");
+
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                /*This is the success callback. Though the response type is JSON, with Retrofit we get the response in the form of ArtistEntity POJO class
+                 */
+                if (response.body() != null) {
+                    ArrayList<AlbumEntity> albumData = parseTracksData(response, albumName, name, url, tracks);
+                    mListener.responseAlbumData(albumData);
+                }
+            }
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                /*
+                Error callback
+                */
+                Request request = call.request();
+            }
+        });
+    }
+
+    private static ArrayList<AlbumEntity> parseTracksData(Response response, String albumName, String name, String url, String tracks) {
+        TrackObject trackObject = (TrackObject) response.body();
+        AlbumTrack album = ((TrackObject) response.body()).getAlbum();
+        List<Track> tracksObject = album.getTracks().getTrack();
+        for (Track track : tracksObject) {
+            setTracks(track);
+        }
+        return null;
+    }
+
+
+    private static void setTracks(Track track) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder
+                .append(track.getName())
+                .append("-")
+                .append(track.getDuration())
+                .append("@");
+    }
+
+    /*
+    *//**
      * User the query parameter for creating url and getting the List of artist
      * @param query
      * @return
-     */
+     *//*
     public static ArrayList<ArtistEntity> fetchArtistListData(String query) {
-        Uri.Builder builder = new Uri.Builder();
+        return null;
+        *//*Uri.Builder builder = new Uri.Builder();
         builder.scheme("http")
                 .authority("ws.audioscrobbler.com")
                 .appendPath("2.0")
@@ -55,16 +301,16 @@ public class HttpUtils {
         }
 
         ArrayList<ArtistEntity> imageArrayList = extractArtistsFromJson(jsonResponse);;
-        return imageArrayList;
+        return imageArrayList;*//*
     }
 
-    /**
+    *//**
      * User the query parameter for creating url and getting the List of artist
      *
      * @param context
      * @param query
      * @return
-     */
+     *//*
     public static ArrayList<AlbumEntity> fetchTopAlbumsListData(Context context, String query) {
         mContext = context;
         Uri.Builder builder = new Uri.Builder();
@@ -300,5 +546,5 @@ public class HttpUtils {
             Log.e(LOG_TAG, e.getMessage());
         }
         return bitmap;
-    }
+    }*/
 }

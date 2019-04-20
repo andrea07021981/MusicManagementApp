@@ -4,14 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,15 +15,16 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.example.andreafranco.musicmanagementapp.R;
-import com.example.andreafranco.musicmanagementapp.loader.AlbumLoader;
 import com.example.andreafranco.musicmanagementapp.local.entity.AlbumEntity;
+import com.example.andreafranco.musicmanagementapp.local.entity.ArtistEntity;
 import com.example.andreafranco.musicmanagementapp.ui.component.SpaceItemDecoration;
 import com.example.andreafranco.musicmanagementapp.ui.component.TopAlbumRecycleViewAdapter;
+import com.example.andreafranco.musicmanagementapp.util.HttpUtils;
 
 import java.util.ArrayList;
 
 
-public class TopAlbumFragment extends Fragment implements TopAlbumRecycleViewAdapter.OnTopAlbumIterationListener, LoaderManager.LoaderCallbacks<ArrayList<AlbumEntity>> {
+public class TopAlbumFragment extends Fragment implements TopAlbumRecycleViewAdapter.OnTopAlbumIterationListener, HttpUtils.DataInterface {
 
     private static final String ARG_PARAM1 = "param1";
     public static final String ALBUM_DETAIL = "album_detail";
@@ -67,7 +62,7 @@ public class TopAlbumFragment extends Fragment implements TopAlbumRecycleViewAda
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_top_album, container, false);
         initView(rootView);
-        getLoaderManager().initLoader(1, null, TopAlbumFragment.this);
+        HttpUtils.fetchTopAlbums(this, mArtistName);
         return rootView;
     }
 
@@ -111,26 +106,19 @@ public class TopAlbumFragment extends Fragment implements TopAlbumRecycleViewAda
         startActivity(intent, options.toBundle());
     }
 
-    @NonNull
     @Override
-    public Loader<ArrayList<AlbumEntity>> onCreateLoader(int i, @Nullable Bundle bundle) {
-        return new AlbumLoader(getContext(), mArtistName);
+    public void responseArtistData(ArrayList<ArtistEntity> artists) {
+
     }
 
     @Override
-    public void onLoadFinished(@NonNull Loader<ArrayList<AlbumEntity>> loader, ArrayList<AlbumEntity> data) {
-        if (data != null && data.size() != 0) {
+    public void responseAlbumData(ArrayList<AlbumEntity> albums) {
+        if (albums != null && albums.size() != 0) {
             mTeamRecycleViewAdapter.clear();
-            mTeamRecycleViewAdapter.addAll(data);
+            mTeamRecycleViewAdapter.addAll(albums);
         }
-        mAlbumArrayList = data;
+        mAlbumArrayList = albums;
         mWaitProgressBar.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void onLoaderReset(@NonNull Loader<ArrayList<AlbumEntity>> loader) {
-        mTeamRecycleViewAdapter.clear();
-        mAlbumArrayList = null;
     }
 
     public interface OnTopAlbumFragmentInteractionListener {

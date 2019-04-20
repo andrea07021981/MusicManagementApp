@@ -1,3 +1,4 @@
+/*
 package com.example.andreafranco.musicmanagementapp.loader;
 
 import android.content.Context;
@@ -34,3 +35,4 @@ public class ArtistLoader extends AsyncTaskLoader<ArrayList<ArtistEntity>> {
         forceLoad();
     }
 }
+*/

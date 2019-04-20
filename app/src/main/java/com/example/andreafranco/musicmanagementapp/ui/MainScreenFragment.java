@@ -2,10 +2,8 @@ package com.example.andreafranco.musicmanagementapp.ui;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,7 +14,6 @@ import android.view.ViewGroup;
 
 import com.example.andreafranco.musicmanagementapp.R;
 import com.example.andreafranco.musicmanagementapp.local.entity.AlbumEntity;
-import com.example.andreafranco.musicmanagementapp.model.Album;
 import com.example.andreafranco.musicmanagementapp.ui.component.AlbumRecycleViewAdapter;
 import com.example.andreafranco.musicmanagementapp.ui.component.SpaceItemDecoration;
 import com.example.andreafranco.musicmanagementapp.viewmodel.AlbumListViewModel;
@@ -49,17 +46,23 @@ public class MainScreenFragment extends Fragment implements AlbumRecycleViewAdap
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView =  inflater.inflate(R.layout.fragment_main_screen, container, false);
+
+        // initialize views and variables
+        initView(rootView);
+        AlbumListViewModel.Factory factory = new AlbumListViewModel.Factory(getActivity().getApplication());
+        mAlbumViewModel = ViewModelProviders.of(this, factory).get(AlbumListViewModel.class);
+        subscribeToModel(mAlbumViewModel);
+
+        return rootView;
+    }
+
+    private void initView(View rootView) {
         mAlbumRecyclerView = rootView.findViewById(R.id.albumlist_recycleview);
         mAlbumRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         AlbumRecycleViewAdapter teamRecycleViewAdapter = new AlbumRecycleViewAdapter(new ArrayList<AlbumEntity>(), getActivity(), this);
         mAlbumRecyclerView.setAdapter(teamRecycleViewAdapter);
         SpaceItemDecoration decoration = new SpaceItemDecoration(16);
         mAlbumRecyclerView.addItemDecoration(decoration);
-        AlbumListViewModel.Factory factory = new AlbumListViewModel.Factory(getActivity().getApplication());
-        mAlbumViewModel = ViewModelProviders.of(this, factory).get(AlbumListViewModel.class);
-        subscribeToModel(mAlbumViewModel);
-
-        return rootView;
     }
 
     @Override

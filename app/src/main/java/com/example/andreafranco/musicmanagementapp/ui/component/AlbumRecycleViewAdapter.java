@@ -1,7 +1,6 @@
 package com.example.andreafranco.musicmanagementapp.ui.component;
 
 import android.content.Context;
-import android.graphics.BitmapFactory;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 import com.example.andreafranco.musicmanagementapp.BasicApp;
 import com.example.andreafranco.musicmanagementapp.R;
 import com.example.andreafranco.musicmanagementapp.local.entity.AlbumEntity;
-import com.example.andreafranco.musicmanagementapp.model.Album;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

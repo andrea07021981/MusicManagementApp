@@ -4,12 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -23,19 +18,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.andreafranco.musicmanagementapp.R;
-import com.example.andreafranco.musicmanagementapp.loader.ArtistLoader;
+import com.example.andreafranco.musicmanagementapp.local.entity.AlbumEntity;
 import com.example.andreafranco.musicmanagementapp.local.entity.ArtistEntity;
 import com.example.andreafranco.musicmanagementapp.ui.component.ArtistRecycleViewAdapter;
+import com.example.andreafranco.musicmanagementapp.util.HttpUtils;
 import com.example.andreafranco.musicmanagementapp.util.NetworkUtils;
 
 import java.util.ArrayList;
 
-public class SearchFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<ArtistEntity>>, ArtistRecycleViewAdapter.OnArtistIterationListener {
+public class SearchFragment extends Fragment implements
+        ArtistRecycleViewAdapter.OnArtistIterationListener,
+        HttpUtils.DataInterface {
 
     private static final String LOG_TAG = SearchFragment.class.getSimpleName();
-    private static final int ARTIST_LOADER_ID = 1;
     public static final String ARTIST_SELECTED = "artist_selected";
-
 
     private OnSearchFragmentInteractionListener mListener;
 
@@ -45,7 +41,6 @@ public class SearchFragment extends Fragment implements LoaderManager.LoaderCall
     TextView mNoNetworkTextView = null;
     TextView mEmptyListTextView = null;
     RecyclerView mArtistRecyclerView = null;
-    LoaderManager mLoaderManager = null;
     ArrayList<ArtistEntity> mArtistInfoArrayList;
     ArtistRecycleViewAdapter mArtistInfoAdapter;
 
@@ -99,6 +94,21 @@ public class SearchFragment extends Fragment implements LoaderManager.LoaderCall
         startActivity(intent);
     }
 
+    @Override
+    public void responseArtistData(ArrayList<ArtistEntity> artists) {
+        if (artists != null && artists.size() != 0) {
+            mArtistInfoAdapter.clear();
+            mArtistInfoAdapter.addAll(artists);
+        }
+        mWaitProgressBar.setVisibility(View.GONE);
+        mArtistInfoArrayList = artists;
+    }
+
+    @Override
+    public void responseAlbumData(ArrayList<AlbumEntity> albums) {
+
+    }
+
     public interface OnSearchFragmentInteractionListener {
         void onSearchFragmentInteraction(Uri uri);
     }
@@ -112,8 +122,6 @@ public class SearchFragment extends Fragment implements LoaderManager.LoaderCall
         mArtistRecyclerView = rootView.findViewById(R.id.artist_recycler_view);
         mArtistRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        mLoaderManager = getLoaderManager();
-
         // on Button click
         mSearchImageButton.setOnClickListener(view -> {
             if (NetworkUtils.isNetworkAvailable(getContext())) {
@@ -121,12 +129,7 @@ public class SearchFragment extends Fragment implements LoaderManager.LoaderCall
 
                 mSearchEditText.clearFocus();
                 if (!TextUtils.isEmpty(mSearchEditText.getText().toString().trim())) {
-                    mWaitProgressBar.setVisibility(View.VISIBLE);
-                    if (mLoaderManager.getLoader(ARTIST_LOADER_ID) == null) {
-                        mLoaderManager.initLoader(ARTIST_LOADER_ID, null, SearchFragment.this);
-                    } else {
-                        mLoaderManager.restartLoader(ARTIST_LOADER_ID, null, SearchFragment.this);
-                    }
+                    HttpUtils.fetchArtist(this, mSearchEditText.getText().toString());
                 } else {
                     showToast(rootView, getString(R.string.nothing_entered));
                 }
@@ -144,27 +147,5 @@ public class SearchFragment extends Fragment implements LoaderManager.LoaderCall
 
     private void showToast(View view, String msg) {
         Toast.makeText(view.getContext(), msg, Toast.LENGTH_LONG).show();
-    }
-
-    @NonNull
-    @Override
-    public Loader<ArrayList<ArtistEntity>> onCreateLoader(int i, @Nullable Bundle bundle) {
-        return new ArtistLoader(getContext(), mSearchEditText.getText().toString());
-    }
-
-    @Override
-    public void onLoadFinished(@NonNull Loader<ArrayList<ArtistEntity>> loader, ArrayList<ArtistEntity> data) {
-        if (data != null && data.size() != 0) {
-            mArtistInfoAdapter.clear();
-            mArtistInfoAdapter.addAll(data);
-        }
-        mWaitProgressBar.setVisibility(View.GONE);
-        mArtistInfoArrayList = data;
-    }
-
-    @Override
-    public void onLoaderReset(@NonNull Loader<ArrayList<ArtistEntity>> loader) {
-        mArtistInfoAdapter.clear();
-        mArtistInfoArrayList = null;
     }
 }

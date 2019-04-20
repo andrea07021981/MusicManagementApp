@@ -95,6 +95,7 @@ public class InfoAlbumFragment extends DialogFragment {
 
     private void updateLocalData(View view) {
         //TODO da salvare/rimuovere
+
     }
 
     private void initValues(View view) {

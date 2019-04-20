@@ -8,11 +8,11 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
-import com.example.andreafranco.musicmanagementapp.model.Album;
+import com.example.andreafranco.musicmanagementapp.model.AlbumModel;
 
 @Entity(tableName = "albums", indices = {@Index("id")})
 
-public class AlbumEntity implements Album, Parcelable {
+public class AlbumEntity implements AlbumModel, Parcelable {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
