@@ -7,5 +7,4 @@ public interface AlbumModel {
     String getName();
     String getArtistname();
     String getImageurl();
-    String getTracks();
 }

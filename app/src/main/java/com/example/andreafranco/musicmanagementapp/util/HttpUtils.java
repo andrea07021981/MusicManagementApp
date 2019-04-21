@@ -194,7 +194,6 @@ public class HttpUtils {
         String url = "";
         String albumName = "";
         String name = "";
-        String tracks = "";
 
         Topalbums topalbums = (Topalbums) body;
         List<Album> albumsList = topalbums.getAlbum();
@@ -210,7 +209,7 @@ public class HttpUtils {
                 }
             }
 
-            albumList.add(new AlbumEntity(albumName, name, url, tracks));
+            albumList.add(new AlbumEntity(albumName, name, url));
         }
     }
 

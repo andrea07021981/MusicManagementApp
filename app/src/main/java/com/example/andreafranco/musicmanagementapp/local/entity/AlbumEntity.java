@@ -26,9 +26,6 @@ public class AlbumEntity implements AlbumModel, Parcelable {
     @NonNull
     private String imageurl;
 
-    @NonNull
-    private String tracks;
-
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
         public AlbumEntity createFromParcel(Parcel in) {
             return new AlbumEntity(in);
@@ -44,23 +41,20 @@ public class AlbumEntity implements AlbumModel, Parcelable {
     }
 
     @Ignore
-    public AlbumEntity(@NonNull String name, @NonNull String artistname, @NonNull String imageurl, @NonNull String tracks) {
+    public AlbumEntity(@NonNull String name, @NonNull String artistname, @NonNull String imageurl) {
         this.name = name;
         this.artistname = artistname;
         this.imageurl = imageurl;
-        this.tracks = tracks;
     }
 
     public AlbumEntity(int id,
                        @NonNull String name,
                        @NonNull String artistname,
-                       @NonNull String imageurl,
-                       @NonNull String tracks) {
+                       @NonNull String imageurl) {
         this.id = id;
         this.name = name;
         this.artistname = artistname;
         this.imageurl = imageurl;
-        this.tracks = tracks;
     }
 
     @Override
@@ -80,16 +74,6 @@ public class AlbumEntity implements AlbumModel, Parcelable {
 
     public void setName(@NonNull String name) {
         this.name = name;
-    }
-
-    @Override
-    @NonNull
-    public String getTracks() {
-        return tracks;
-    }
-
-    public void setTracks(@NonNull String tracks) {
-        this.tracks = tracks;
     }
 
     @Override
@@ -117,7 +101,6 @@ public class AlbumEntity implements AlbumModel, Parcelable {
         this.name = in.readString();
         this.artistname = in.readString();
         this.imageurl = in.readString();
-        this.tracks = in.readString();
     }
 
     @Override
@@ -131,6 +114,5 @@ public class AlbumEntity implements AlbumModel, Parcelable {
         dest.writeString(this.name);
         dest.writeString(this.artistname);
         dest.writeString(this.imageurl);
-        dest.writeString(this.tracks);
     }
 }
