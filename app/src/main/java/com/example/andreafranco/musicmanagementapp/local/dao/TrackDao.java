@@ -11,6 +11,7 @@ import android.arch.persistence.room.Update;
 import com.example.andreafranco.musicmanagementapp.local.entity.ArtistEntity;
 import com.example.andreafranco.musicmanagementapp.local.entity.TrackEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Dao

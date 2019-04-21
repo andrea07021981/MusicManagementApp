@@ -26,6 +26,7 @@ import com.example.andreafranco.musicmanagementapp.viewmodel.AlbumViewModel;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class InfoAlbumFragment extends DialogFragment implements HttpUtils.DataInterface, TrackRecycleViewAdapter.OnTrackIterationListener {
     private static final String ARG_PARAM1 = "param1";
@@ -39,7 +40,7 @@ public class InfoAlbumFragment extends DialogFragment implements HttpUtils.DataI
     private ImageButton mActionImageButton;
     private AlbumViewModel mAlbumViewModel;
     private AlbumListViewModel mAlbumListViewModel;
-    private ArrayList<TrackEntity> mTrackArrayList;
+    private List<TrackEntity> mTrackArrayList;
     private TrackRecycleViewAdapter mTrackRecycleViewAdapter;
 
     public InfoAlbumFragment() {
@@ -110,16 +111,18 @@ public class InfoAlbumFragment extends DialogFragment implements HttpUtils.DataI
         mArtistNameTextView.setText(mAlbum.getArtistname());
         AlbumViewModel.Factory factory = new AlbumViewModel.Factory(getActivity().getApplication(), mAlbum.getName());
         mAlbumViewModel = ViewModelProviders.of(this, factory).get(AlbumViewModel.class);
-        mAlbumViewModel.getAlbum().observe(this, albumEntity -> {
+        mAlbumViewModel.getAlbumByName(mAlbum.getName()).observe(this, albumEntity -> {
             if (albumEntity != null) {
+                mAlbum = albumEntity;
                 mActionImageButton.setImageDrawable(getActivity().getDrawable(android.R.drawable.ic_delete));
                 mActionImageButton.setTag(STORED);
+                mAlbumViewModel.getTracks(albumEntity.getId()).observe(this, this::responseTrackData);
             } else {
+                HttpUtils.getInstance().fetchTracks(this, mAlbum);
                 mActionImageButton.setImageDrawable(getActivity().getDrawable(android.R.drawable.ic_menu_save));
                 mActionImageButton.setTag(null);
             }
         });
-        HttpUtils.getInstance().fetchTracks(this, mAlbum);
     }
 
     @Override
@@ -149,7 +152,7 @@ public class InfoAlbumFragment extends DialogFragment implements HttpUtils.DataI
     }
 
     @Override
-    public void responseTrackData(ArrayList<TrackEntity> tracks) {
+    public void responseTrackData(List<TrackEntity> tracks) {
         if (tracks != null && tracks.size() != 0) {
             mTrackRecycleViewAdapter.clear();
             mTrackRecycleViewAdapter.addAll(tracks);

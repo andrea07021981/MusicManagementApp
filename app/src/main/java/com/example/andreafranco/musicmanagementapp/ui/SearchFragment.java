@@ -26,6 +26,7 @@ import com.example.andreafranco.musicmanagementapp.util.HttpUtils;
 import com.example.andreafranco.musicmanagementapp.util.NetworkUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SearchFragment extends Fragment implements
         ArtistRecycleViewAdapter.OnArtistIterationListener,
@@ -111,7 +112,7 @@ public class SearchFragment extends Fragment implements
     }
 
     @Override
-    public void responseTrackData(ArrayList<TrackEntity> tracks) {
+    public void responseTrackData(List<TrackEntity> tracks) {
 
     }
 

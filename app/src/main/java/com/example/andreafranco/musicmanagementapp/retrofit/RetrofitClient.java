@@ -10,8 +10,6 @@ import retrofit2.http.Query;
 
 public interface RetrofitClient {
 
-    //http://ws.audioscrobbler.com/2.0?method=artist.getinfo&artist=cher&api_key=662a954a65209a1d7763b5c655077174&format=json
-
     @GET("/2.0")
     Call<ArtistObject> getArtistByName(
             @Query("method") String method,

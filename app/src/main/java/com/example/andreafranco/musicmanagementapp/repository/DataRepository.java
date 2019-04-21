@@ -2,14 +2,12 @@ package com.example.andreafranco.musicmanagementapp.repository;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
-import android.support.annotation.NonNull;
 
 import com.example.andreafranco.musicmanagementapp.AppExecutors;
 import com.example.andreafranco.musicmanagementapp.local.AppDatabase;
 import com.example.andreafranco.musicmanagementapp.local.entity.AlbumEntity;
 import com.example.andreafranco.musicmanagementapp.local.entity.TrackEntity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DataRepository {
@@ -51,12 +49,16 @@ public class DataRepository {
     }
 
     public LiveData<AlbumEntity> getAlbumByName(final String albumName) {
-        return mDatabase.albumDao().getAlbumById(albumName);
+        return mDatabase.albumDao().getAlbumByName(albumName);
+    }
+
+    public LiveData<List<TrackEntity>> getTracksByALbum(final int albumId) {
+        return mDatabase.trackDao().getTrackByAlbum(albumId);
     }
 
     //here I add the tracks on db
     //TODO the next step would be creating a relation between table and do the inserts simultaneously with a @Transaction method
-    public void insertAlbum(AlbumEntity albumEntity, ArrayList<TrackEntity> mTrackArrayList) {
+    public void insertAlbum(AlbumEntity albumEntity, List<TrackEntity> mTrackArrayList) {
         mExecutors.diskIO().execute(()-> {
             long id = mDatabase.albumDao().insertAlbum(albumEntity);
             for (TrackEntity track : mTrackArrayList) {

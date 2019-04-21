@@ -22,6 +22,7 @@ import com.example.andreafranco.musicmanagementapp.ui.component.TopAlbumRecycleV
 import com.example.andreafranco.musicmanagementapp.util.HttpUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class TopAlbumFragment extends Fragment implements TopAlbumRecycleViewAdapter.OnTopAlbumIterationListener, HttpUtils.DataInterface {
@@ -122,7 +123,7 @@ public class TopAlbumFragment extends Fragment implements TopAlbumRecycleViewAda
     }
 
     @Override
-    public void responseTrackData(ArrayList<TrackEntity> tracks) {
+    public void responseTrackData(List<TrackEntity> tracks) {
 
     }
 

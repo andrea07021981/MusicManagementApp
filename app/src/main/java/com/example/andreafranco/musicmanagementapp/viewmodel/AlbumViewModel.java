@@ -34,11 +34,19 @@ public class AlbumViewModel extends AndroidViewModel {
         return mObservableAlbum;
     }
 
+    public LiveData<AlbumEntity> getAlbumByName(String albumName) {
+        return mRepository.getAlbumByName(albumName);
+    }
+
+    public LiveData<List<TrackEntity>> getTracks(int albumId) {
+        return mRepository.getTracksByALbum(albumId);
+    }
+
     public void deleteAlbum(AlbumEntity album) {
         mRepository.deleteAlbum(album);
     }
 
-    public void insertAlbum(AlbumEntity album, ArrayList<TrackEntity> mTrackArrayList) {
+    public void insertAlbum(AlbumEntity album, List<TrackEntity> mTrackArrayList) {
         mRepository.insertAlbum(album, mTrackArrayList);
     }
 

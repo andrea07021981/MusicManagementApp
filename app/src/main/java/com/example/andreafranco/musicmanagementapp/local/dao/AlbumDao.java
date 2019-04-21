@@ -19,7 +19,7 @@ public interface AlbumDao {
     LiveData<List<AlbumEntity>> getAllalbums();
 
     @Query("SELECT * FROM albums WHERE name = :name")
-    LiveData<AlbumEntity> getAlbumById(String name);
+    LiveData<AlbumEntity> getAlbumByName(String name);
 
     @Insert
     public long insertAlbum(AlbumEntity albumEntity);

@@ -44,7 +44,7 @@ public class HttpUtils {
     public interface DataInterface {
         void responseArtistData(ArrayList<ArtistEntity> artists);
         void responseAlbumData(ArrayList<AlbumEntity> albums);
-        void responseTrackData(ArrayList<TrackEntity> tracks);
+        void responseTrackData(List<TrackEntity> tracks);
     }
 
     private HttpUtils() {
