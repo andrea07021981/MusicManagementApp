@@ -43,7 +43,7 @@ public class MainScreenActivity extends SingleFragmentActivity implements Naviga
     }
 
     private void setUpNavigationDrawer() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.dashboard_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.mainscreen_toolbar);
         setSupportActionBar(toolbar);
 
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);

@@ -3,7 +3,7 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/tools"
     style="@style/Widget.MaterialComponents.CardView"
-    android:id="@+id/user_card_view"
+    android:id="@+id/artist_card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     card_view:cardUseCompatPadding="true"

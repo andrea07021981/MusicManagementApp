@@ -20,7 +20,7 @@ import java.util.List;
 public class AlbumRecycleViewAdapter extends RecyclerView.Adapter<AlbumRecycleViewAdapter.AlbumViewHolder> {
     private List<AlbumEntity> mAlbumList;
     private Context mContext;
-    OnAlbumIterationListener mListener;
+    private OnAlbumIterationListener mListener;
 
     public interface OnAlbumIterationListener {
         void onAlbumSelected(AlbumEntity album, Pair<View, String>... p);

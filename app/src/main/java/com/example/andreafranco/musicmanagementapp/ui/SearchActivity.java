@@ -43,6 +43,5 @@ public class SearchActivity extends SingleFragmentActivity implements SearchFrag
 
     @Override
     public void onSearchFragmentInteraction(Uri uri) {
-        //TODO Call the searchalbum activity
     }
 }
